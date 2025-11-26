@@ -9,6 +9,8 @@ interface Props {
   description?: string;
 }
 
+const currentPathname = Astro.url.pathname;
+
 const { 
   title = SITE.title, 
   description = SITE.description 
@@ -39,7 +41,7 @@ const {
     <meta property="twitter:description" content={description} />
   </head>
   <body class="flex min-h-screen flex-col bg-white font-sans text-neutral-900 antialiased">
-    <Header />
+    <Header currentPathname={currentPathname} />
     <main class="flex-1">
       <slot />
     </main>
