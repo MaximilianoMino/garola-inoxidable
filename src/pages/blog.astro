@@ -1,0 +1,136 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/ui/Section.astro';
+import Card from '../components/ui/Card.astro';
+import { Image } from 'astro:assets';
+import { ArrowRight, Calendar, Tag } from 'lucide-react';
+
+import blogHeroImg from '@assets/photo-1518770660439-4636190af475.jpg'; // Imagen temática de blog/noticias
+import article1Img from '@assets/photo-1542838132-92c53300491e.jpg';
+import article2Img from '@assets/photo-1581091226825-a6a2a5aee158.jpg';
+import article3Img from '@assets/photo-1559839734-2b71ea197ec2.jpg';
+
+const posts = [
+  {
+    title: "Innovaciones en Acero Inoxidable 316L para la Industria Láctea",
+    summary: "Exploramos las últimas mejoras en aleaciones y su impacto directo en la higiene y durabilidad de los equipos.",
+    date: "15 de Octubre, 2024",
+    category: "Tecnología",
+    image: article1Img
+  },
+  {
+    title: "Optimización Energética en Procesos de Pasteurización",
+    summary: "Análisis de cómo nuestro nuevo sistema de control inteligente reduce el consumo energético hasta en un 20%.",
+    date: "01 de Octubre, 2024",
+    category: "Eficiencia",
+    image: article2Img
+  },
+  {
+    title: "Diseño a Medida: Retos y Soluciones en Proyectos Especiales",
+    summary: "Caso de estudio sobre un requerimiento complejo para un cliente del sector alimenticio no estándar.",
+    date: "20 de Septiembre, 2024",
+    category: "Casos de Éxito",
+    image: article3Img
+  }
+];
+---
+
+<BaseLayout title="Blog - Noticias y Actualizaciones de Garola Inoxidable">
+  <!-- Hero Section -->
+  <section class="relative h-[65vh] min-h-[450px] flex items-center overflow-hidden bg-slate-900">
+    <div class="absolute inset-0">
+      <Image 
+        src={blogHeroImg}
+        alt="Imágenes abstractas de fabricación o tecnología"
+        class="w-full h-full object-cover opacity-20"
+        width={2070}
+        height={1380}
+        decoding="async"
+      />
+      <div class="absolute inset-0 bg-linear-to-r from-slate-900/95 via-slate-900/80 to-slate-900/60"></div>
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(220,40,40,0.1),transparent_70%)]"></div>
+    </div>
+
+    <div class="container mx-auto relative z-10 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-4xl mx-auto text-center">
+        <div class="inline-flex items-center px-4 py-2 mb-6 bg-red-600/10 text-red-500 text-sm font-semibold rounded-full shadow-lg backdrop-blur-sm border border-red-600/20 uppercase tracking-widest">
+          <Calendar className="w-4 h-4 mr-2" />
+          Noticias & Artículos
+        </div>
+        
+        <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight uppercase tracking-tight">
+          El Blog de
+          <span class="block text-red-600 mt-2">
+            Garola Inoxidable
+          </span>
+        </h1>
+        
+        <p class="text-xl md:text-2xl text-slate-300 mb-8 max-w-3xl mx-auto leading-relaxed">
+          Manténgase al día con las últimas tendencias en fabricación industrial, tecnología de control y las innovaciones en acero inoxidable.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Post Grid -->
+  <Section background="dark">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            {posts.map((post) => (
+                <Card hover class="bg-[#1a1f24] border border-slate-800 flex flex-col transition-all duration-300 hover:shadow-red-900/20">
+                    <div class="relative h-56 overflow-hidden rounded-t-xl">
+                        <Image 
+                            src={post.image.src}
+                            alt={post.title}
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            width={1000}
+                            height={700}
+                        />
+                        <div class="absolute inset-0 bg-linear-to-t from-black/70 via-transparent to-transparent"></div>
+                        <span class="absolute top-4 left-4 text-xs font-semibold text-white px-3 py-1 rounded-full bg-red-600/90 uppercase tracking-wider">
+                            {post.category}
+                        </span>
+                    </div>
+                    
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-2xl font-bold text-white mb-3 uppercase tracking-tight hover:text-red-600 transition-colors">
+                            {post.title}
+                        </h3>
+                        <p class="text-slate-400 mb-4 flex-grow">{post.summary}</p>
+                        
+                        <div class="flex justify-between items-center text-sm mt-auto pt-4 border-t border-slate-800">
+                            <span class="text-slate-500 flex items-center gap-2">
+                                <Calendar className="w-4 h-4" />
+                                {post.date}
+                            </span>
+                            <a href="#" class="text-red-600 hover:text-white font-semibold flex items-center gap-1 transition-colors">
+                                Leer más 
+                                <ArrowRight className="w-4 h-4 ml-1" />
+                            </a>
+                        </div>
+                    </div>
+                </Card>
+            ))}
+        </div>
+        
+        <!-- Pagination Placeholder -->
+        <div class="flex justify-center mt-16">
+            <div class="flex space-x-1">
+                <button class="p-3 px-4 text-slate-400 bg-[#1a1f24] rounded-lg hover:bg-red-600 hover:text-white transition-colors border border-slate-700">Anterior</button>
+                <button class="p-3 px-4 text-white bg-red-600 rounded-lg shadow-md border border-red-600">1</button>
+                <button class="p-3 px-4 text-slate-400 bg-[#1a1f24] rounded-lg hover:bg-red-600 hover:text-white transition-colors border border-slate-700">2</button>
+                <button class="p-3 px-4 text-slate-400 bg-[#1a1f24] rounded-lg hover:bg-red-600 hover:text-white transition-colors border border-slate-700">Siguiente</button>
+            </div>
+        </div>
+
+    </div>
+  </Section>
+
+</BaseLayout>
+
+<style>
+    /* Para asegurar que el Card en el mapa se vea como un bloque de contenido */
+    .group:hover .h-full {
+        transform: scale(1.02);
+    }
+</style>

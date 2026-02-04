@@ -1,0 +1,85 @@
+---
+import { ArrowRight } from 'lucide-react';
+import { SITE } from '@config/site';
+---
+
+<section class="py-28 bg-[#14171A] relative overflow-hidden">
+  <!-- Fondo Decorativo (Similar a PremiumHero) -->
+  <div class="absolute inset-0 opacity-5 pointer-events-none">
+    <div class="absolute inset-0" style="background-image: radial-gradient(circle at 2px 2px, #DC2828 1px, transparent 0); background-size: 60px 60px;"></div>
+  </div>
+  <div class="absolute -top-20 -right-20 w-[400px] h-[400px] bg-red-600 rounded-full opacity-10 blur-3xl"></div>
+
+
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="text-center mb-16">
+      <div class="inline-block px-4 py-2 mb-4 bg-red-600/10 text-red-500 text-sm font-semibold rounded-full border border-red-600/20 uppercase tracking-widest">
+        NUESTRA EMPRESA
+      </div>
+      <h2 class="text-4xl md:text-5xl font-bold text-white mb-6 uppercase tracking-tight">
+        GAROLA <span class="text-red-600">INOXIDABLE</span>
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
+      <!-- Columna 1: Misión y Visión (Texto) -->
+      <div class="space-y-10 text-white lg:col-span-1">
+        <div class="p-6 bg-[#1a1f24] rounded-xl shadow-xl border-t-4 border-red-600">
+          <h3 class="text-2xl font-bold mb-3 uppercase tracking-tight text-red-500">Misión</h3>
+          <p class="text-slate-300 leading-relaxed">
+            Ser el socio estratégico preferido en ingeniería de precisión, diseñando y fabricando equipamiento industrial que impulse la eficiencia y calidad de nuestros clientes en el sector alimenticio y lácteo.
+          </p>
+        </div>
+        <div class="p-6 bg-[#1a1f24] rounded-xl shadow-xl border-t-4 border-red-600">
+          <h3 class="text-2xl font-bold mb-3 uppercase tracking-tight text-red-500">Visión</h3>
+          <p class="text-slate-300 leading-relaxed">
+            Liderar el mercado latinoamericano en soluciones de acero inoxidable, siendo reconocidos por nuestra innovación tecnológica, calidad certificada y compromiso inquebrantable con la satisfacción del cliente.
+          </p>
+        </div>
+      </div>
+
+      <!-- Columna 2: Historia y Estructura (Estilo de la Opción 2, basado en la imagen 2) -->
+      <div class="lg:col-span-2 space-y-12">
+        <!-- Texto Principal (Reemplazo del texto Hero si este bloque se ubica en la Home) -->
+        <p class="text-xl text-slate-200 leading-relaxed border-l-4 border-red-600 pl-6 bg-[#1a1f24]/50 p-4 rounded-md">
+            {SITE.description}
+        </p>
+
+        <!-- Sección de Historia con Estadísticas (como en diseño 2) -->
+        <div class="space-y-8">
+          <h3 class="text-3xl font-bold text-white uppercase tracking-tight border-b border-slate-700 pb-3">Nuestra Trayectoria</h3>
+          
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <!-- Stat 1 -->
+            <div class="p-4 bg-[#1a1f24] rounded-lg shadow-lg border-b-4 border-red-600">
+              <p class="text-4xl font-extrabold text-red-600 mb-1">25+</p>
+              <p class="text-sm text-slate-400 uppercase tracking-wider">Años de Experiencia</p>
+            </div>
+            <!-- Stat 2 -->
+            <div class="p-4 bg-[#1a1f24] rounded-lg shadow-lg border-b-4 border-red-600">
+              <p class="text-4xl font-extrabold text-red-600 mb-1">120+</p>
+              <p class="text-sm text-slate-400 uppercase tracking-wider">Proyectos Entregados</p>
+            </div>
+            <!-- Stat 3 -->
+            <div class="p-4 bg-[#1a1f24] rounded-lg shadow-lg border-b-4 border-red-600">
+              <p class="text-4xl font-extrabold text-red-600 mb-1">100%</p>
+              <p class="text-sm text-slate-400 uppercase tracking-wider">Satisfacción Cliente</p>
+            </div>
+            <!-- Stat 4 -->
+            <div class="p-4 bg-[#1a1f24] rounded-lg shadow-lg border-b-4 border-red-600">
+              <p class="text-4xl font-extrabold text-red-600 mb-1">ISO</p>
+              <p class="text-sm text-slate-400 uppercase tracking-wider">Certificación 9001</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="text-center mt-16">
+        <a href="/contact" class="inline-flex items-center px-8 py-3 text-base font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg shadow-xl transition-all group uppercase tracking-widest">
+          Conozca Más Sobre Nosotros
+          <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+        </a>
+    </div>
+  </div>
+</section>
