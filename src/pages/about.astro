@@ -1,36 +1,39 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Section from '../components/ui/Section.astro';
-import Card from '../components/ui/Card.astro';
-import { Image } from 'astro:assets';
-import { ArrowRight, Factory, Target } from 'lucide-react';
-import { SITE } from '@config/site';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Section from "../components/ui/Section.astro";
+import Card from "../components/ui/Card.astro";
+import { Image } from "astro:assets";
+import { ArrowRight, Factory, Target } from "lucide-react";
+import { SITE } from "@config/site";
 
-import aboutHeroImg from '@assets/photo-1522071820081-009f0129c71c.jpg'; // Imagen temática de empresa
-import article2Img from '@assets/photo-1581091226825-a6a2a5aee158.jpg';
+import aboutHeroImg from "@assets/photo-1522071820081-009f0129c71c.jpg"; // Imagen temática de empresa
+import article2Img from "@assets/photo-1581091226825-a6a2a5aee158.jpg";
 
 const secondaryContent = [
-    {
-        title: "MISIÓN",
-        content: "Ser el socio estratégico preferido en ingeniería de precisión, diseñando y fabricando equipamiento industrial que impulse la eficiencia y calidad de nuestros clientes en el sector alimenticio y lácteo.",
-        icon: Factory,
-        color: "from-red-600 to-red-700"
-    },
-    {
-        title: "VISIÓN",
-        content: "Liderar el mercado latinoamericano en soluciones de acero inoxidable, siendo reconocidos por nuestra innovación tecnológica, calidad certificada y compromiso inquebrantable con la satisfacción del cliente.",
-        icon: Target,
-        color: "from-zinc-800 to-zinc-900"
-    }
+  {
+    title: "MISIÓN",
+    content:
+      "Ser el socio estratégico preferido en ingeniería de precisión, diseñando y fabricando equipamiento industrial que impulse la eficiencia y calidad de nuestros clientes en el sector alimenticio y lácteo.",
+    icon: Factory,
+    color: "from-red-600 to-red-700",
+  },
+  {
+    title: "VISIÓN",
+    content:
+      "Liderar el mercado latinoamericano en soluciones de acero inoxidable, siendo reconocidos por nuestra innovación tecnológica, calidad certificada y compromiso inquebrantable con la satisfacción del cliente.",
+    icon: Target,
+    color: "from-zinc-800 to-zinc-900",
+  },
 ];
-
 ---
 
 <BaseLayout title="Sobre Nosotros - Garola Inoxidable">
   <!-- Hero Section -->
-  <section class="relative h-[70vh] min-h-[500px] flex items-center overflow-hidden bg-slate-900">
+  <section
+    class="relative h-[70vh] min-h-[500px] flex items-center overflow-hidden bg-slate-900"
+  >
     <div class="absolute inset-0">
-      <Image 
+      <Image
         src={aboutHeroImg}
         alt="Imagen de la planta o equipo industrial"
         class="w-full h-full object-cover opacity-30"
@@ -38,24 +41,36 @@ const secondaryContent = [
         height={1380}
         decoding="async"
       />
-      <div class="absolute inset-0 bg-linear-to-r from-slate-900/95 via-slate-900/85 to-slate-900/60"></div>
-      <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(220,40,40,0.1),transparent_70%)]"></div>
+      <div
+        class="absolute inset-0 bg-linear-to-r from-slate-900/95 via-slate-900/85 to-slate-900/60"
+      >
+      </div>
+      <div
+        class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(220,40,40,0.1),transparent_70%)]"
+      >
+      </div>
     </div>
 
     <div class="container mx-auto relative z-10 px-4 sm:px-6 lg:px-8">
       <div class="max-w-4xl mx-auto text-center">
-        <div class="inline-flex items-center px-4 py-2 mb-6 bg-red-600/10 text-red-500 text-sm font-semibold rounded-full shadow-lg backdrop-blur-sm border border-red-600/20 uppercase tracking-widest">
+        <div
+          class="inline-flex items-center px-4 py-2 mb-6 bg-red-600/10 text-red-500 text-sm font-semibold rounded-full shadow-lg backdrop-blur-sm border border-red-600/20 uppercase tracking-widest"
+        >
           <Factory className="w-4 h-4 mr-2" />
           NUESTRA EMPRESA
         </div>
-        
-        <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight uppercase tracking-tight">
+
+        <h1
+          class="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight uppercase tracking-tight"
+        >
           EXCELENCIA EN <span class="block text-red-600 mt-2">
             INGENIERÍA
           </span>
         </h1>
-        
-        <p class="text-xl md:text-2xl text-slate-200 mb-8 max-w-4xl mx-auto leading-relaxed">
+
+        <p
+          class="text-xl md:text-2xl text-slate-200 mb-8 max-w-4xl mx-auto leading-relaxed"
+        >
           {SITE.description}
         </p>
       </div>
@@ -63,32 +78,50 @@ const secondaryContent = [
   </section>
 
   <!-- Section 2: Estadísticas -->
-  <Section background="dark">
+  <Section background="gray">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-12">
-        <h2 class="text-3xl md:text-4xl font-bold text-white mb-3 uppercase tracking-tight">
-            Nuestra Trayectoria
+        <h2
+          class="text-3xl md:text-4xl font-bold text-white mb-3 uppercase tracking-tight"
+        >
+          Nuestra Trayectoria
         </h2>
         <p class="text-lg text-slate-400 max-w-2xl mx-auto">
-            Resultados que reflejan nuestra trayectoria y calidad certificada.
+          Resultados que reflejan nuestra trayectoria y calidad certificada.
         </p>
       </div>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
-        <div class="p-4 bg-[#1a1f24] rounded-lg shadow-xl border-b-4 border-red-600/50 text-center flex flex-col items-center">
-            <p class="text-5xl font-extrabold text-red-600 mb-2">25+</p>
-            <p class="text-sm text-slate-300 uppercase tracking-wider">Años de Experiencia</p>
+        <div
+          class="p-4 bg-[#1a1f24] rounded-lg shadow-xl border-b-4 border-red-600/50 text-center flex flex-col items-center"
+        >
+          <p class="text-5xl font-extrabold text-red-600 mb-2">25+</p>
+          <p class="text-sm text-slate-300 uppercase tracking-wider">
+            Años de Experiencia
+          </p>
         </div>
-        <div class="p-4 bg-[#1a1f24] rounded-lg shadow-xl border-b-4 border-red-600/50 text-center flex flex-col items-center">
-            <p class="text-5xl font-extrabold text-red-600 mb-2">120+</p>
-            <p class="text-sm text-slate-300 uppercase tracking-wider">Proyectos Entregados</p>
+        <div
+          class="p-4 bg-[#1a1f24] rounded-lg shadow-xl border-b-4 border-red-600/50 text-center flex flex-col items-center"
+        >
+          <p class="text-5xl font-extrabold text-red-600 mb-2">120+</p>
+          <p class="text-sm text-slate-300 uppercase tracking-wider">
+            Proyectos Entregados
+          </p>
         </div>
-        <div class="p-4 bg-[#1a1f24] rounded-lg shadow-xl border-b-4 border-red-600/50 text-center flex flex-col items-center">
-            <p class="text-5xl font-extrabold text-red-600 mb-2">100%</p>
-            <p class="text-sm text-slate-400 uppercase tracking-wider">Satisfacción Cliente</p>
+        <div
+          class="p-4 bg-[#1a1f24] rounded-lg shadow-xl border-b-4 border-red-600/50 text-center flex flex-col items-center"
+        >
+          <p class="text-5xl font-extrabold text-red-600 mb-2">100%</p>
+          <p class="text-sm text-slate-400 uppercase tracking-wider">
+            Satisfacción Cliente
+          </p>
         </div>
-        <div class="p-4 bg-[#1a1f24] rounded-lg shadow-xl border-b-4 border-red-600/50 text-center flex flex-col items-center">
-            <p class="text-5xl font-extrabold text-red-600 mb-2">ISO</p>
-            <p class="text-sm text-slate-400 uppercase tracking-wider">9001:2015</p>
+        <div
+          class="p-4 bg-[#1a1f24] rounded-lg shadow-xl border-b-4 border-red-600/50 text-center flex flex-col items-center"
+        >
+          <p class="text-5xl font-extrabold text-red-600 mb-2">ISO</p>
+          <p class="text-sm text-slate-400 uppercase tracking-wider">
+            9001:2015
+          </p>
         </div>
       </div>
     </div>
@@ -97,42 +130,48 @@ const secondaryContent = [
   <!-- Section 3: Misión y Visión -->
   <Section background="gray">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div class="space-y-10 text-white">
-                {secondaryContent.map(item => (
-                    <div class="p-8 bg-[#1a1f24] rounded-xl shadow-2xl border-l-4 border-red-600">
-                        <div class="flex items-center gap-3 mb-3">
-                            <item.icon className='w-6 h-6 text-red-500' />
-                            <h3 class="text-3xl font-bold uppercase tracking-tight text-red-500">{item.title}</h3>
-                        </div>
-                        <p class="text-slate-300 leading-relaxed text-lg">
-                            {item.content}
-                        </p>
-                    </div>
-                ))}
-            </div>
-
-            <div class="relative">
-                <Image 
-                    src={article2Img}
-                    alt="Imagen representativa de equipo industrial o valor"
-                    class="w-full rounded-2xl shadow-2xl border border-slate-700 grayscale brightness-75"
-                    width={800}
-                    height={600}
-                />
-                <div class="absolute -bottom-4 -right-4 bg-red-600/80 p-4 rounded-lg shadow-lg text-white text-sm font-semibold uppercase tracking-wider">
-                    Comprometidos con la Calidad
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div class="space-y-10 text-white">
+          {
+            secondaryContent.map((item) => {
+              return (
+                <div class="p-8 bg-[#1a1f24] rounded-xl shadow-2xl border-l-4 border-red-600">
+                  <div class="flex items-center gap-3 mb-3">
+                    <item.icon className="w-6 h-6 text-red-500" />
+                    <h3 class="text-3xl font-bold uppercase tracking-tight text-red-500">
+                      {item.title}
+                    </h3>
+                  </div>
+                  <p class="text-slate-300 leading-relaxed text-lg">
+                    {item.content}
+                  </p>
                 </div>
-            </div>
+              );
+            })
+          }
         </div>
+
+        <div class="relative">
+          <Image
+            src={article2Img}
+            alt="Imagen representativa de equipo industrial o valor"
+            class="w-full rounded-2xl shadow-2xl border border-slate-700 grayscale brightness-75"
+            width={800}
+            height={600}
+          />
+          <div
+            class="absolute -bottom-4 -right-4 bg-red-600/80 p-4 rounded-lg shadow-lg text-white text-sm font-semibold uppercase tracking-wider"
+          >
+            Comprometidos con la Calidad
+          </div>
+        </div>
+      </div>
     </div>
   </Section>
-  
-
 </BaseLayout>
 
 <style>
   .bg-gray {
-    background-color: #14171A; 
+    background-color: #14171a;
   }
 </style>

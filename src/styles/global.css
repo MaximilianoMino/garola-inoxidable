@@ -1,12 +1,23 @@
 @import "tailwindcss";
 
+@theme {
+  --color-garola-red: #DC2828;
+  --color-garola-dark: #14171A;
+  --color-garola-slate: #1a1f24;
+}
+
 /* Smooth scrolling */
 html {
   @apply scroll-smooth;
 }
 
+body {
+  background-color: var(--color-garola-dark);
+  color: #e2e8f0; /* slate-200 */
+}
+
 .nav-active {
-  @apply after:content-[""] after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-1.5 after:h-1.5 after:bg-blue-300 hover:after:bg-transparent after:rounded-full;
+  @apply text-white after:content-[""] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-red-600 after:rounded-full;
 }
 
 /* Animations */
@@ -39,7 +50,7 @@ html {
 }
 
 .gradient-text {
-  background: linear-gradient(to right, #2563eb, #0d9488);
+  background: linear-gradient(to right, #DC2828, #ef4444);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

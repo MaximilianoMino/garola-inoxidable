@@ -1,0 +1,40 @@
+pages:
+  - title: Blog Posts
+    path: src/content/blog
+    fields:
+      - name: title
+        label: Título
+        type: string
+
+      - name: description
+        label: Descripción
+        type: text
+
+      - name: image
+        label: Imagen
+        type: image
+        path: public/blog
+
+      - name: category
+        label: Categoría
+        type: select
+        options:
+          - Tecnología
+          - Mantenimiento
+          - Normativas
+          - Diseño
+          - Noticias
+
+      - name: pubDatetime
+        label: Fecha de Publicación
+        type: datetime
+
+      - name: draft
+        label: Borrador
+        type: boolean
+        default: false
+
+      - name: tags
+        label: Etiquetas
+        type: list
+        required: false

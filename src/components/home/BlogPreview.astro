@@ -1,0 +1,73 @@
+---
+import getSortedPosts from "@/data/getSortedPosts";
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+import { ArrowRight, Calendar } from "lucide-react";
+
+const posts = await getCollection("blog");
+
+const sortedPosts = await getSortedPosts(posts);
+const featuredPosts = sortedPosts.slice(0, 3);
+---
+
+<section class="py-24 bg-[#14171A] border-t border-slate-800">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col md:flex-row justify-between items-end mb-12">
+      <div class="border-l-4 border-red-600 pl-6">
+        <span
+          class="text-red-500 font-mono uppercase tracking-widest font-semibold text-sm"
+        >
+          Actualidad Industrial
+        </span>
+        <h2
+          class="text-4xl md:text-5xl font-bold text-white mb-8 uppercase tracking-tight"
+        >
+          Blog Técnico
+        </h2>
+      </div>
+
+      <a
+        href="/blog"
+        class="hidden md:inline-flex items-center gap-2 text-sm font-bold text-white uppercase tracking-widest hover:text-red-500 transition-colors group mt-6 md:mt-0"
+      >
+        Ver todas las noticias
+        <ArrowRight
+          className="w-4 h-4 transition-transform group-hover:translate-x-1"
+        />
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {
+        featuredPosts.map((post) => (
+          <article class="group bg-[#1a1f24] border border-slate-800 rounded-xl overflow-hidden hover:border-red-600/50 transition-all duration-300 flex flex-col h-full">
+            <div class="relative h-48 overflow-hidden">
+              <Image
+                src={post.data.image}
+                alt={post.data.title}
+                width={1000}
+                height={2000}
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+            </div>
+
+            <div class="p-6 flex flex-col flex-1">
+              <div class="flex items-center gap-2 text-slate-500 text-xs mb-3 font-mono">
+                <Calendar className="w-3 h-3" />
+                {post.data.pubDatetime}
+              </div>
+
+              <h3 class="text-xl font-bold text-white mb-3 leading-tight group-hover:text-red-500 transition-colors">
+                <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+              </h3>
+
+              <p class="text-slate-400 text-sm leading-relaxed mb-4 flex-1">
+                {post.data.description}
+              </p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

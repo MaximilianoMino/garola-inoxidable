@@ -5,6 +5,10 @@ export const SITE = {
     "Especialistas en el diseño, fabricación y mantenimiento de equipamiento industrial. Trabajamos bajo los más altos estándares de calidad con materiales certificados, brindando soluciones para la industria láctea, alimenticia y proyectos a medida.",
   url: "https://yourdomain.com",
   author: "GAROLA INOXIDABLE",
+  ogImage: "astropaper-og.jpg",
+  lightAndDarkMode: true,
+  postPerPage: 3,
+  scheduledPostMargin: 15 * 60 * 1000, // 15 minutes
 } as const;
 
 export const NAVIGATION = [

@@ -1,0 +1,57 @@
+---
+import getPageNumbers from "@/data/getPageNumbers";
+import getPagination from "@/data/getPagination";
+import getSortedPosts from "@/data/getSortedPosts";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getCollection, type CollectionEntry } from "astro:content";
+export interface Props {
+  post: CollectionEntry<"blog">;
+}
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }) => !data.draft);
+
+  const postResult = posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+
+  const pagePaths = getPageNumbers(posts.length).map((pageNum) => ({
+    params: { slug: String(pageNum) },
+  }));
+
+  return [...postResult, ...pagePaths];
+}
+
+const { slug } = Astro.params;
+const { post } = Astro.props;
+
+const posts = await getCollection("blog");
+
+const sortedPosts = getSortedPosts(posts);
+
+const pagination = getPagination({
+  posts: sortedPosts,
+  page: slug,
+});
+
+const { Content } = await post.render();
+---
+
+<BaseLayout title={post.data.title}>
+  <article class="container mx-auto max-w-3xl px-4 py-24">
+    <img src={post.data.image} alt={post.data.title} class="rounded-xl mb-10" />
+
+    <h1 class="text-4xl font-bold text-white mb-4">
+      {post.data.title}
+    </h1>
+
+    <p class="text-slate-500 mb-10">
+      {post.data.pubDatetime.toLocaleDateString()}
+    </p>
+
+    <div class="prose prose-invert max-w-none">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>
