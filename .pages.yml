@@ -3,7 +3,7 @@ content:
     label: Blog Posts
     path: src/content/blog
     type: collection
-    format: json
+    format: md
 
     fields:
       - name: title
