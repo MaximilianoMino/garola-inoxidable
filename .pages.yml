@@ -3,7 +3,7 @@ content:
     label: Blog Posts
     path: src/content/blog
     type: collection
-    format: md
+    format: json
 
     fields:
       - name: title
@@ -43,4 +43,5 @@ content:
 
       - name: tags
         label: Etiquetas
-        type: array
+        options:
+          type: array
