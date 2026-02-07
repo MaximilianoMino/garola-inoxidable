@@ -16,7 +16,7 @@ content:
 
       - name: image
         label: Imagen
-        type: image
+        type: string
         options:
           path: public/blog
 
