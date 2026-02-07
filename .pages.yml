@@ -3,7 +3,7 @@ content:
     label: Blog Posts
     path: src/content/blog
     type: collection
-    format: md
+    format: yaml-frontmatter
 
     fields:
       - name: title
