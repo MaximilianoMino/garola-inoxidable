@@ -1,11 +1,19 @@
 content:
   - name: blog_posts
+    label: Blog Posts
     path: src/content/blog
     type: collection
+    format: md
+
+    slug:
+      field: title
+      transform: slugify
+
     fields:
       - name: title
         label: Título
         type: string
+        required: true
 
       - name: description
         label: Descripción
@@ -40,4 +48,3 @@ content:
       - name: tags
         label: Etiquetas
         type: list
-        required: false
