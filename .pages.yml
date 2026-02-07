@@ -14,11 +14,7 @@ content:
         label: Descripción
         type: text
 
-      - name: image
-        label: Imagen
-        type: image
-        options:
-          path: public/blog
+      
 
       - name: category
         label: Categoría
