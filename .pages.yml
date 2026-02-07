@@ -3,7 +3,6 @@ content:
     label: Blog Posts
     path: src/content/blog
     type: collection
-    format: yaml
 
     fields:
       - name: title
@@ -44,4 +43,4 @@ content:
       - name: tags
         label: Etiquetas
         options:
-          type: array
+          type: string
