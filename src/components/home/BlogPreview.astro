@@ -43,7 +43,7 @@ const featuredPosts = sortedPosts.slice(0, 3);
           <article class="group bg-[#1a1f24] border border-slate-800 rounded-xl overflow-hidden hover:border-red-600/50 transition-all duration-300 flex flex-col h-full">
             <div class="relative h-48 overflow-hidden">
               <Image
-                src={post.data.image}
+                src={post.data.image ?? ""}
                 alt={post.data.title}
                 width={1000}
                 height={2000}
