@@ -42,5 +42,6 @@ content:
 
       - name: tags
         label: Etiquetas
+        type: reference
         options:
-          type: array
+          type: string
