@@ -1,5 +1,5 @@
 content:
-  - name: Blog Posts
+  - name: blog_posts
     path: src/content/blog
     type: collection
     fields:
@@ -14,7 +14,6 @@ content:
       - name: image
         label: Imagen
         type: image
-        path: public/blog
 
       - name: category
         label: Categoría
