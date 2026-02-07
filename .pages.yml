@@ -1,6 +1,8 @@
-pages:
-  - title: Blog Posts
+content:
+  - name: blog
+    label: Blog Posts
     path: src/content/blog
+    type: collection
     fields:
       - name: title
         label: Título
