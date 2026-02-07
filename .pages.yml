@@ -43,4 +43,4 @@ content:
       - name: tags
         label: Etiquetas
         options:
-          type: string
+          type: array
