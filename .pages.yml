@@ -1,4 +1,4 @@
-pages:
+collections:
   - title: Blog Posts
     path: src/content/blog
     fields:
