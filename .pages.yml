@@ -8,6 +8,7 @@ content:
     slug:
       field: title
       transform: slugify
+      locked: true
 
     fields:
       - name: title
@@ -38,7 +39,7 @@ content:
 
       - name: pubDatetime
         label: Fecha de Publicación
-        type: datetime
+        type: date
 
       - name: draft
         label: Borrador
@@ -47,4 +48,4 @@ content:
 
       - name: tags
         label: Etiquetas
-        type: list
+        type: array
