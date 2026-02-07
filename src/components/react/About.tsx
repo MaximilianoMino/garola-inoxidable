@@ -18,7 +18,7 @@ export default function About() {
             transition={{ duration: 0.8 }}
           >
             <div className="border-l-4 border-red-600 pl-6">
-              <span className="text-red-500 font-mono uppercase tracking-widest font-semibold text-sm">
+              <span className="text-red-500 uppercase tracking-widest font-semibold text-sm">
                 Nuestra Esencia
               </span>
               <h2 className="text-4xl md:text-5xl font-bold text-white mb-2 uppercase tracking-tight">

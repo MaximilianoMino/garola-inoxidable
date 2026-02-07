@@ -1,5 +1,6 @@
 ---
 import getSortedPosts from "@/data/getSortedPosts";
+import { formatDate } from "@/utils/formatDate";
 import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 import { ArrowRight, Calendar } from "lucide-react";
@@ -12,10 +13,10 @@ const featuredPosts = sortedPosts.slice(0, 3);
 
 <section class="py-24 bg-[#14171A] border-t border-slate-800">
   <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex flex-col md:flex-row justify-between items-end mb-12">
+    <div class="flex flex-col md:flex-row justify-between mb-12">
       <div class="border-l-4 border-red-600 pl-6">
         <span
-          class="text-red-500 font-mono uppercase tracking-widest font-semibold text-sm"
+          class="text-red-500 uppercase tracking-widest font-semibold text-sm"
         >
           Actualidad Industrial
         </span>
@@ -52,9 +53,9 @@ const featuredPosts = sortedPosts.slice(0, 3);
             </div>
 
             <div class="p-6 flex flex-col flex-1">
-              <div class="flex items-center gap-2 text-slate-500 text-xs mb-3 font-mono">
+              <div class="flex items-center gap-2 text-slate-500 text-xs mb-3">
                 <Calendar className="w-3 h-3" />
-                {post.data.pubDatetime}
+                {formatDate(post.data.pubDatetime)}
               </div>
 
               <h3 class="text-xl font-bold text-white mb-3 leading-tight group-hover:text-red-500 transition-colors">

@@ -5,62 +5,72 @@ import Card from "@/components/ui/Card.astro";
 import { ArrowRight, Calendar } from "lucide-react";
 import getSortedPosts from "@/data/getSortedPosts";
 import { getCollection } from "astro:content";
-import getPagination from "@/data/getPagination";
 
-const posts = await getCollection("blog");
-
+const posts = await getCollection("blog", ({ data }) => !data.draft);
 const sortedPosts = getSortedPosts(posts);
-
-const pagination = getPagination({
-  posts: sortedPosts,
-  page: 1,
-  isIndex: true,
-});
 ---
 
-<BaseLayout title="Blog - Garola Inoxidable">
-  <Section background="gray">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+<BaseLayout title="Blog Técnico - Garola Inoxidable">
+  <Section background="dark">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-24">
+      <!-- Header -->
+      <div class="border-l-4 border-red-600 pl-6 mb-16">
+        <span
+          class="text-red-500  uppercase tracking-widest font-semibold text-sm"
+        >
+          Actualidad Industrial
+        </span>
+        <h1
+          class="text-4xl md:text-5xl font-bold text-white uppercase tracking-tight mt-2"
+        >
+          Blog Técnico
+        </h1>
+      </div>
+
+      <!-- Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
         {
           sortedPosts.map((post) => (
-            <Card class="bg-[#1a1f24] border border-slate-800 flex flex-col">
-              <div class="relative h-56 overflow-hidden rounded-t-xl">
+            <article class="group bg-[#1a1f24] border border-slate-800 rounded-xl overflow-hidden hover:border-red-600/50 transition-all duration-300 flex flex-col">
+              <!-- Imagen -->
+              <div class="relative h-56 overflow-hidden">
                 <img
                   src={post.data.image}
                   alt={post.data.title}
-                  class="w-full h-full object-cover"
+                  class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
+
                 <span class="absolute top-4 left-4 text-xs font-semibold text-white px-3 py-1 rounded-full bg-red-600 uppercase">
                   {post.data.category}
                 </span>
               </div>
 
+              <!-- Contenido -->
               <div class="p-6 flex flex-col flex-grow">
-                <h3 class="text-2xl font-bold text-white mb-3">
-                  {post.data.title}
+                <div class="flex items-center gap-2 text-slate-500 text-xs mb-3">
+                  <Calendar className="w-3 h-3" />
+                  {post.data.pubDatetime.toLocaleDateString()}
+                </div>
+
+                <h3 class="text-xl font-bold text-white mb-3 leading-tight group-hover:text-red-500 transition-colors">
+                  <a href={`/blog/${post.slug}`}>
+                    {post.data.title}
+                  </a>
                 </h3>
 
-                <p class="text-slate-400 mb-4 flex-grow">
+                <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
                   {post.data.description}
                 </p>
 
-                <div class="flex justify-between items-center text-sm mt-auto pt-4 border-t border-slate-800">
-                  <span class="text-slate-500 flex items-center gap-2">
-                    <Calendar className="w-4 h-4" />
-                    {post.data.pubDatetime.toLocaleDateString()}
-                  </span>
-
-                  <a
-                    href={`/blog/${post.slug}`}
-                    class="text-red-600 hover:text-white font-semibold flex items-center gap-1"
-                  >
-                    Leer más
-                    <ArrowRight className="w-4 h-4 ml-1" />
-                  </a>
-                </div>
+                <a
+                  href={`/blog/${post.slug}`}
+                  class="mt-auto inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-white hover:text-red-500 transition-colors"
+                >
+                  Leer más
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </a>
               </div>
-            </Card>
+            </article>
           ))
         }
       </div>

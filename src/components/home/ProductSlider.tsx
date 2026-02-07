@@ -22,7 +22,7 @@ export default function ProductSlider() {
         {/* Header de la sección */}
         <div className="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-slate-800 pb-6">
           <div className="border-l-4 border-red-600 pl-6">
-            <span className="text-red-500 font-mono uppercase tracking-widest font-semibold text-sm">
+            <span className="text-red-500 uppercase tracking-widest font-semibold text-sm">
               Nuestra Tecnología
             </span>
             <h2 className="text-4xl md:text-5xl font-bold text-white uppercase tracking-tight">
@@ -70,7 +70,7 @@ export default function ProductSlider() {
                 {/* Info del Producto Principal */}
                 <div className="absolute bottom-0 left-0 w-full p-8 md:p-12">
                   <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                    <span className="inline-block px-3 py-1 mb-4 text-xs font-mono text-white bg-red-600 font-bold uppercase tracking-widest">
+                    <span className="inline-block px-3 py-1 mb-4 text-xs text-white bg-red-600 font-bold uppercase tracking-widest">
                       {PRODUCTS[current].cat}
                     </span>
                     <h3 className="text-4xl md:text-6xl font-bold text-white uppercase tracking-tighter mb-4">
@@ -80,7 +80,7 @@ export default function ProductSlider() {
 
                     <a
                       href="/products"
-                      className="inline-flex items-center gap-2 text-slate-300 hover:text-white font-mono uppercase tracking-widest text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100"
+                      className="inline-flex items-center gap-2 text-slate-300 hover:text-white uppercase tracking-widest text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100"
                     >
                       Ver Ficha Técnica <ArrowUpRight className="w-4 h-4" />
                     </a>
@@ -101,7 +101,7 @@ export default function ProductSlider() {
                 <div className="absolute inset-0 bg-black/60 group-hover:bg-black/40 transition-all"></div>
 
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6 border-2 border-transparent group-hover:border-red-600/30 transition-colors m-4">
-                  <span className="text-slate-400 font-mono text-xs uppercase tracking-widest mb-2">
+                  <span className="text-slate-400 text-xs uppercase tracking-widest mb-2">
                     Siguiente
                   </span>
                   <h4 className="text-xl font-bold text-white uppercase tracking-tight opacity-70 group-hover:opacity-100 transition-opacity">

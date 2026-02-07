@@ -1,6 +1,8 @@
 ---
 import { NAVIGATION, SOCIAL_LINKS, SITE } from "@config/site";
 import { Facebook, Instagram, Mail, MapPin } from "lucide-react";
+import logo from "@assets/garola_logo_white.webp";
+import { Image } from "astro:assets";
 ---
 
 <footer class="bg-[#14171A] text-slate-300 border-t border-slate-800">
@@ -9,7 +11,13 @@ import { Facebook, Instagram, Mail, MapPin } from "lucide-react";
       <!-- Brand -->
       <div class="space-y-6">
         <a href="/" class="inline-block">
-          <img src="/logo-garola.svg" alt="Garola Inoxidable" class="h-8" />
+          <Image
+            src={logo}
+            alt="Garola Inoxidable"
+            class="h-20 w-32 object-contain"
+            width={1000}
+            height={100}
+          />
         </a>
 
         <p class="text-sm text-slate-400 leading-relaxed max-w-xs">
@@ -85,9 +93,9 @@ import { Facebook, Instagram, Mail, MapPin } from "lucide-react";
           Industrias
         </h3>
         <ul class="space-y-3 text-sm text-slate-400">
-          <li>Lácteos</li>
-          <li>Tambo</li>
-          <li>Trabajos especiales</li>
+          <li><a href="/#solutions">Lácteos</a></li>
+          <li><a href="/#solutions">Tambo</a></li>
+          <li><a href="/#solutions">Trabajos especiales</a></li>
         </ul>
       </div>
 
