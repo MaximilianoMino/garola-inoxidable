@@ -1,0 +1,200 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { Image } from "astro:assets";
+import { Factory, Target, Wrench, Ruler, Building2, Headphones } from "lucide-react";
+import heroImg from "@assets/garola-about-us-hero.webp";
+import aboutImg from "@assets/about-us.webp";
+
+const pillars = [
+  {
+    title: "Ingeniería aplicada",
+    description:
+      "Cada equipo se desarrolla considerando los procesos productivos y las condiciones reales de trabajo, buscando mejorar la eficiencia y funcionalidad de cada instalación.",
+    icon: Wrench,
+  },
+  {
+    title: "Soluciones a medida",
+    description:
+      "Desarrollamos equipos adaptados a las necesidades de cada cliente, con un diseño funcional pensado en la optimización del material y en las dimensiones adecuadas para su uso.",
+    icon: Ruler,
+  },
+  {
+    title: "Experiencia en la industria",
+    description:
+      "Nuestra trayectoria trabajando con tambos e industrias lácteas y alimenticias nos permite comprender las exigencias técnicas y operativas de cada sector.",
+    icon: Building2,
+  },
+  {
+    title: "Asesoramiento técnico",
+    description:
+      "Acompañamos a nuestros clientes desde la idea inicial hasta la implementación del equipamiento, brindando asesoramiento basado en la experiencia y el conocimiento del sector.",
+    icon: Headphones,
+  },
+];
+---
+
+<BaseLayout title="Quiénes Somos - Garola Inoxidable">
+  <!-- Hero compacto -->
+  <section class="relative h-[40vh] min-h-[300px] flex items-center overflow-hidden">
+    <div class="absolute inset-0">
+      <Image
+        src={heroImg}
+        alt="Equipamiento industrial Garola"
+        class="w-full h-full object-cover opacity-30"
+        width={2070}
+        height={600}
+        decoding="async"
+      />
+      <div class="absolute inset-0 bg-linear-to-r from-[#14171A]/95 via-[#14171A]/85 to-[#14171A]/70"></div>
+    </div>
+
+    <div class="container mx-auto relative z-10 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-4xl">
+        <div class="border-l-4 border-red-600 pl-6">
+          <span class="text-red-500 uppercase tracking-widest font-semibold text-sm">
+            Nuestra Esencia
+          </span>
+          <h1 class="text-4xl md:text-5xl font-bold text-white mt-2 uppercase tracking-tight">
+            Sobre <span class="text-red-600">Nosotros</span>
+          </h1>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="py-16 bg-[#14171A] border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div class="text-center">
+          <p class="text-5xl md:text-6xl font-extrabold text-red-600 mb-2">40+</p>
+          <p class="text-sm text-slate-300 uppercase tracking-wider">Años de experiencia</p>
+        </div>
+        <div class="text-center">
+          <p class="text-5xl md:text-6xl font-extrabold text-red-600 mb-2">120+</p>
+          <p class="text-sm text-slate-300 uppercase tracking-wider">Proyectos entregados</p>
+        </div>
+        <div class="text-center">
+          <p class="text-5xl md:text-6xl font-extrabold text-red-600 mb-2">100%</p>
+          <p class="text-sm text-slate-300 uppercase tracking-wider">Satisfacción cliente</p>
+        </div>
+        <div class="text-center">
+          <p class="text-5xl md:text-6xl font-extrabold text-red-600 mb-2">ISO</p>
+          <p class="text-sm text-slate-300 uppercase tracking-wider">9001:2015</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Texto + Imagen -->
+  <section class="py-24 bg-[#14171A]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20">
+        {/* Texto */}
+        <div>
+          <h2 class="text-xl font-semibold text-white tracking-tight mb-6">
+            Ingeniería aplicada al trabajo real
+          </h2>
+          <div class="space-y-4 text-slate-400 leading-relaxed">
+            <p>
+              Garola Inoxidable es una empresa argentina especializada en el
+              diseño, fabricación e instalación de equipamiento industrial en
+              acero inoxidable. Con más de 40 años de experiencia en el rubro y
+              más de 15 años desarrollando proyectos bajo la marca Garola
+              Inoxidable, nos enfocamos en brindar soluciones para la industria
+              láctea y alimenticia, combinando ingeniería, experiencia en el
+              sector y conocimiento de los procesos productivos.
+            </p>
+            <p>
+              Más que fabricar equipos, trabajamos junto a cada cliente
+              brindando asesoramiento técnico en cada etapa del proyecto, desde
+              la definición de la necesidad hasta la implementación del
+              equipamiento.
+            </p>
+            <p>
+              Trabajamos con aceros inoxidables AISI 304 y 316, aplicando
+              procesos de fabricación y terminaciones acordes a los
+              requerimientos de la industria alimenticia. Nuestros equipos se
+              desarrollan bajo criterios de diseño sanitario, con soldaduras y
+              superficies con terminaciones sanitarias pensadas para facilitar la
+              limpieza y garantizar condiciones adecuadas de higiene, durabilidad
+              y confiabilidad.
+            </p>
+          </div>
+        </div>
+
+        {/* Imagen */}
+        <div class="relative rounded overflow-hidden border border-slate-800">
+          <img
+            src={aboutImg.src}
+            alt="Taller Garola Inoxidable"
+            width={aboutImg.width}
+            height={aboutImg.height}
+            class="w-full h-full object-cover lg:grayscale hover:grayscale-0 transition-all duration-700"
+          />
+        </div>
+      </div>
+
+      {/* Misión y Visión */}
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
+        <div class="bg-[#1a1f24] border border-slate-800 p-8 rounded border border-slate-800 p-8 hover:border-red-600/30 transition-colors group">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-12 h-12 rounded bg-red-600/10 flex items-center justify-center group-hover:bg-red-600/20 transition-colors">
+              <Factory className="w-6 h-6 text-red-500" />
+            </div>
+            <h3 class="text-xl font-bold text-white uppercase tracking-tight">
+              Misión
+            </h3>
+          </div>
+          <p class="text-slate-400 leading-relaxed">
+            Desarrollar soluciones en acero inoxidable que mejoren los procesos
+            productivos de la industria.
+          </p>
+        </div>
+        <div class="bg-[#1a1f24] border border-slate-800 p-8 rounded border border-slate-800 p-8 hover:border-red-600/30 transition-colors group">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-12 h-12 rounded bg-red-600/10 flex items-center justify-center group-hover:bg-red-600/20 transition-colors">
+              <Target className="w-6 h-6 text-red-500" />
+            </div>
+            <h3 class="text-xl font-bold text-white uppercase tracking-tight">
+              Visión
+            </h3>
+          </div>
+          <p class="text-slate-400 leading-relaxed">
+            Ser un referente en soluciones en acero inoxidable, combinando
+            calidad y tecnología funcional aplicada al tambo y a la industria
+            alimenticia.
+          </p>
+        </div>
+      </div>
+
+      {/* Pilares de valor */}
+      <div class="border-l-4 border-red-600 pl-6 mb-12">
+        <span class="text-red-500 uppercase tracking-widest font-semibold text-sm">
+          Nuestro compromiso
+        </span>
+        <h3 class="text-3xl md:text-4xl font-bold text-white mt-2 uppercase tracking-tight">
+          Pilares <span class="text-red-600">de valor</span>
+        </h3>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {
+          pillars.map((pillar) => (
+            <div class="bg-[#1a1f24] border border-slate-800 p-8 rounded border border-slate-800 p-8 hover:border-red-600/30 transition-colors group">
+              <div class="flex items-center gap-4 mb-4">
+                <div class="w-12 h-12 rounded bg-red-600/10 flex items-center justify-center group-hover:bg-red-600/20 transition-colors">
+                  <pillar.icon className="w-6 h-6 text-red-500" />
+                </div>
+                <h3 class="text-xl font-bold text-white uppercase tracking-tight">
+                  {pillar.title}
+                </h3>
+              </div>
+              <p class="text-slate-400 leading-relaxed">{pillar.description}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>

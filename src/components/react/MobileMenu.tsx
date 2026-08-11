@@ -24,6 +24,8 @@ export default function MobileMenu() {
             <img
               src={logo.src}
               alt="Garola Inoxidable"
+              width={logo.width}
+              height={logo.height}
               className="h-20 w-20 object-contain"
             />
             <Dialog.Close asChild>

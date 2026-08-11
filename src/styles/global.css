@@ -11,6 +11,11 @@ html {
   @apply scroll-smooth;
 }
 
+/* Compensa el header sticky (h-20 = 80px) al navegar por hash */
+[id] {
+  scroll-margin-top: 5rem;
+}
+
 body {
   background-color: var(--color-garola-dark);
   color: #e2e8f0; /* slate-200 */
@@ -47,6 +52,35 @@ body {
 
 .animate-fadeIn {
   animation: fadeIn 0.4s ease-out forwards;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slideIn {
+  animation: slideIn 0.5s ease-out forwards;
+}
+
+/* Cursor pointer para elementos interactivos */
+button, a, [role="button"], .cursor-pointer, input[type="submit"], input[type="button"] {
+  cursor: pointer;
+}
+
+/* Ocultar scrollbar en scroll horizontal */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }
 
 .gradient-text {

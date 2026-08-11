@@ -1,18 +1,12 @@
-import type { CollectionEntry } from "astro:content";
-import postFilter from "./postFilter";
+import { contentful } from "@/lib/contentful/contentful";
+import { mapBlogPost } from "@/lib/contentful/mapper";
+import type { BlogPost } from "@/types";
 
-const getSortedPosts = (posts: CollectionEntry<"blog">[]) => {
-  return posts
-    .filter(postFilter)
-    .sort(
-      (a, b) =>
-        Math.floor(
-          new Date(b.data.modDatetime ?? b.data.pubDatetime).getTime() / 1000,
-        ) -
-        Math.floor(
-          new Date(a.data.modDatetime ?? a.data.pubDatetime).getTime() / 1000,
-        ),
-    );
-};
+export async function getSortedPosts(): Promise<BlogPost[]> {
+  const res = await contentful.getEntries({
+    content_type: "garolaInoxidable",
+    order: ["sys.createdAt"],
+  });
 
-export default getSortedPosts;
+  return res.items.map(mapBlogPost);
+}

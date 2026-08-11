@@ -1,48 +1,52 @@
 // src/data/content.ts
 
-// Imágenes de productos
-import product1 from "@assets/photo-1558494949-ef010cbdcc31.jpg";
-import product2 from "@assets/photo-1559839734-2b71ea197ec2.jpg";
-import product3 from "@assets/photo-1565043589221-1a6fd9ae45c7.jpg";
-import product4 from "@assets/photo-1558618666-fcd25c85cd64.jpg";
-import product5 from "@assets/photo-1542838132-92c53300491e.jpg";
-
 // Imágenes de servicios
-import dairyImage from "@assets/tina.jpeg";
-import foodImage from "@assets/pasteurizador-calostro.jpeg";
-import specialImage from "@assets/lavadora-baldes.jpeg";
+import dairyImage from "@assets/tina.webp";
+import foodImage from "@assets/pasteurizador-calostro.webp";
+import specialImage from "@assets/prensa.webp";
 
-export const PRODUCTS = [
-  { id: 1, title: "Vita Milk 5000", cat: "Lácteos", image: product1 },
-  { id: 2, title: "Tanque Fermentador", cat: "Industria", image: product2 },
-  { id: 3, title: "Pasteurizador HTST", cat: "Procesos", image: product3 },
-  { id: 4, title: "Silo Industrial", cat: "Gran Capacidad", image: product4 },
-  { id: 5, title: "Cisterna Térmica", cat: "Transporte", image: product5 },
-];
+export const CATEGORIES = [
+  { id: "todos", label: "Todos" },
+  { id: "tambos", label: "Tambos y crianza" },
+  { id: "lacteos", label: "Industria láctea" },
+  { id: "alimenticia", label: "Industria alimenticia" },
+  { id: "especiales", label: "Proyectos especiales" },
+] as const;
 
+export type CategoryId = (typeof CATEGORIES)[number]["id"];
+
+// ─── SERVICIOS / SECTORES ──────────────────────────────
 export const SERVICES = [
   {
-    id: "dairy",
-    title: "Lácteos",
+    id: "lacteos",
+    title: "Industria láctea",
     description:
-      "Equipos de enfriamiento y almacenamiento de alta eficiencia. Máxima higiene y control térmico garantizado.",
+      "Equipamiento desarrollado para los procesos de elaboración y manejo de productos lácteos. Pasteurizadores, tinas queseras, prensas y más.",
     image: dairyImage,
-    tags: ["Enfriadores", "Silos", "Pasteurizadores"],
+    tags: ["Pasteurizadores", "Tinas", "Prensas"],
   },
   {
-    id: "food",
-    title: "Tambo",
+    id: "tambos",
+    title: "Equipamiento para tambos",
     description:
-      "Soluciones de proceso sanitario para bebidas y alimentos. Cumplimiento de normativas internacionales.",
+      "Soluciones prácticas pensadas para el trabajo diario en el tambo. VitalMilk, DualTech, enfriadores y silos.",
     image: foodImage,
-    tags: ["Tanques", "Mezcladores", "Cañerías"],
+    tags: ["VitalMilk", "DualTech", "Enfriadores"],
   },
   {
-    id: "special",
-    title: "Trabajos Especiales",
+    id: "alimenticia",
+    title: "Industria alimenticia",
     description:
-      "Desarrollos a medida, arquitectura metálica y soluciones personalizadas para proyectos complejos.",
+      "Fabricación de equipos en acero inoxidable para distintos procesos de la industria alimenticia, incluyendo chacinados, bebidas y cocinas industriales.",
     image: specialImage,
-    tags: ["Arquitectura", "Diseño a Medida", "Estructuras"],
+    tags: ["Túneles", "Fermentadores", "Cocinas"],
+  },
+  {
+    id: "especiales",
+    title: "Proyectos especiales",
+    description:
+      "Desarrollos específicos en acero inoxidable adaptados a necesidades particulares de cada cliente. Tanques, estructuras y desarrollos a medida.",
+    image: specialImage,
+    tags: ["Tanques", "Estructuras", "Arquitectura"],
   },
 ];

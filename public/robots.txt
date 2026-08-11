@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.garolainoxidable.com.ar/sitemap.xml

@@ -126,8 +126,8 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 
 ```
 /
-├── public/
-│   └── favicon.svg
+├── docs/            # Documentación del proyecto (no se publica)
+├── public/          # Archivos públicos (fichas técnicas, favicon, etc.)
 ├── src/
 │   ├── assets/          # Images and static assets
 │   ├── components/      # Reusable components

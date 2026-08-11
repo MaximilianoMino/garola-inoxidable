@@ -1,0 +1,183 @@
+---
+import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
+import { getFeaturedProducts } from "@/lib/contentful/products";
+import { CATEGORIES } from "@/data/content";
+
+const products = await getFeaturedProducts(10);
+
+const getCatLabel = (catIds: string[]) =>
+  CATEGORIES.find((c) => c.id === catIds?.[0])?.label ?? catIds?.[0] ?? "";
+---
+
+<section class="py-24 bg-[#1a1f24] border-b border-slate-800 overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    {/* Header */}
+    <div class="flex flex-col md:flex-row justify-between items-start lg:items-end mb-12 border-b border-slate-800 pb-6">
+      <div class="border-l-4 border-red-600 pl-6">
+        <span class="text-red-500 uppercase tracking-widest font-semibold text-sm">
+          Nuestra Tecnología
+        </span>
+        <h2 class="text-4xl md:text-5xl font-bold text-white uppercase tracking-tight">
+          Catálogo <span class="text-red-600">Destacado</span>
+        </h2>
+      </div>
+      <div class="flex gap-4 mt-8 md:mt-0">
+        <a
+          href="/productos"
+          class="px-6 py-4 border border-slate-700 text-slate-400 hover:bg-red-600 hover:text-white hover:border-red-600 transition-all text-sm uppercase tracking-widest font-semibold"
+        >
+          Ver todos
+        </a>
+        <button
+          id="slider-prev"
+          class="p-4 border border-slate-700 text-slate-400 hover:bg-red-600 hover:text-white hover:border-red-600 transition-all rounded-none"
+          aria-label="Anterior"
+        >
+          <ArrowLeft size={20} />
+        </button>
+        <button
+          id="slider-next"
+          class="p-4 border border-slate-700 text-slate-400 hover:bg-red-600 hover:text-white hover:border-red-600 transition-all rounded-none"
+          aria-label="Siguiente"
+        >
+          <ArrowRight size={20} />
+        </button>
+      </div>
+    </div>
+
+    {products.length > 0 ? (
+      <>
+        {/* Área del Slider */}
+        <div class="relative h-[550px] w-full" id="slider-area">
+          {products.map((product, index) => (
+            <div
+              class:list={[
+                "slider-slide absolute inset-0 grid grid-cols-1 md:grid-cols-3 gap-8 transition-opacity duration-500",
+                index === 0 ? "opacity-100" : "opacity-0 pointer-events-none",
+              ]}
+              data-index={index}
+            >
+              {/* Producto Principal */}
+              <div class="md:col-span-2 relative overflow-hidden group border border-slate-800 bg-[#1a1f24]">
+                <img
+                  src={product.image}
+                  alt={product.title}
+                  class="w-full h-full object-cover lg:grayscale group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+
+                <div class="absolute bottom-0 left-0 w-full p-8 md:p-12">
+                  <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                    <span class="inline-block px-3 py-1 mb-4 text-xs text-white bg-red-600 font-bold uppercase tracking-widest">
+                      {getCatLabel(product.category)}
+                    </span>
+                    <h3 class="text-4xl md:text-6xl font-bold text-white uppercase tracking-tighter mb-4">
+                      {product.title}
+                    </h3>
+                    <div class="h-1 w-0 bg-red-600 group-hover:w-full transition-all duration-700 ease-out mb-6"></div>
+
+                    {product.pdf && (
+                      <a
+                        href={product.pdf}
+                        target="_blank"
+                        class="inline-flex items-center gap-2 text-slate-300 hover:text-white uppercase tracking-widest text-sm font-bold lg:opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100"
+                      >
+                        Ver Ficha Técnica <ArrowUpRight className="w-4 h-4" />
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Preview siguiente */}
+              <div
+                class="hidden md:block relative overflow-hidden group border border-slate-800 cursor-pointer slider-next-trigger"
+              >
+                <img
+                  src={products[(index + 1) % products.length].image}
+                  alt={products[(index + 1) % products.length].title}
+                  class="w-full h-full object-cover grayscale transition-all duration-700 opacity-60 group-hover:opacity-40"
+                />
+                <div class="absolute inset-0 bg-black/60 group-hover:bg-black/40 transition-all"></div>
+
+                <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-6 border-2 border-transparent group-hover:border-red-600/30 transition-colors m-4">
+                  <span class="text-slate-400 text-xs uppercase tracking-widest mb-2">
+                    Siguiente
+                  </span>
+                  <h4 class="text-xl font-bold text-white uppercase tracking-tight opacity-70 group-hover:opacity-100 transition-opacity">
+                    {products[(index + 1) % products.length].title}
+                  </h4>
+                  <div class="mt-4 w-12 h-12 border border-slate-600 flex items-center justify-center text-white group-hover:bg-red-600 group-hover:border-red-600 transition-all">
+                    <ArrowRight size={20} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Indicadores */}
+        <div class="flex gap-2 mt-8 justify-center md:justify-start" id="slider-dots">
+          {products.map((_, idx) => (
+            <div
+              class:list={[
+                "h-1 transition-all duration-300",
+                idx === 0 ? "w-12 bg-red-600" : "w-4 bg-slate-700",
+              ]}
+              data-dot={idx}
+            />
+          ))}
+        </div>
+      </>
+    ) : (
+      <div class="flex flex-col items-center justify-center text-center py-24 border border-dashed border-slate-700 rounded bg-[#1a1f24]">
+        <h3 class="text-2xl font-bold text-white mb-4 uppercase">
+          Catálogo en preparación
+        </h3>
+        <p class="text-slate-400 max-w-md">
+          Estamos cargando nuestros productos. Pronto podrás ver todo nuestro equipamiento.
+        </p>
+      </div>
+    )}
+  </div>
+</section>
+
+{products.length > 0 && (
+<script>
+  const total = document.querySelectorAll(".slider-slide").length;
+  let current = 0;
+
+  function goTo(index: number) {
+    current = ((index % total) + total) % total;
+
+    document.querySelectorAll(".slider-slide").forEach((slide) => {
+      const i = Number((slide as HTMLElement).dataset.index);
+      if (i === current) {
+        slide.classList.remove("opacity-0", "pointer-events-none");
+        slide.classList.add("opacity-100");
+      } else {
+        slide.classList.add("opacity-0", "pointer-events-none");
+        slide.classList.remove("opacity-100");
+      }
+    });
+
+    document.querySelectorAll("[data-dot]").forEach((dot) => {
+      const i = Number((dot as HTMLElement).dataset.dot);
+      if (i === current) {
+        dot.classList.remove("w-4", "bg-slate-700");
+        dot.classList.add("w-12", "bg-red-600");
+      } else {
+        dot.classList.add("w-4", "bg-slate-700");
+        dot.classList.remove("w-12", "bg-red-600");
+      }
+    });
+  }
+
+  document.getElementById("slider-prev")?.addEventListener("click", () => goTo(current - 1));
+  document.getElementById("slider-next")?.addEventListener("click", () => goTo(current + 1));
+
+  document.querySelectorAll(".slider-next-trigger").forEach((el) => {
+    el.addEventListener("click", () => goTo(current + 1));
+  });
+</script>
+)}

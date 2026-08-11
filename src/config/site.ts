@@ -2,25 +2,24 @@
 export const SITE = {
   title: "GAROLA INOXIDABLE",
   description:
-    "Especialistas en el diseño, fabricación y mantenimiento de equipamiento industrial. Trabajamos bajo los más altos estándares de calidad con materiales certificados, brindando soluciones para la industria láctea, alimenticia y proyectos a medida.",
-  url: "https://yourdomain.com",
+    "Ingeniería, desarrollo y fabricación de equipamiento en acero inoxidable para la industria láctea y alimenticia. Más de 40 años de experiencia en el rubro respaldan cada desarrollo.",
+  // TODO: Verificar dominio definitivo con el cliente
+  url: "https://www.garolainoxidable.com.ar",
   author: "GAROLA INOXIDABLE",
 } as const;
 
 export const NAVIGATION = [
   { name: "INICIO", href: "/" },
-  { name: "SOBRE NOSOTROS", href: "/#about" },
+  { name: "QUIÉNES SOMOS", href: "/nosotros" },
+  { name: "SECTORES", href: "/#solutions" },
   { name: "PRODUCTOS", href: "/#products" },
-  { name: "SOLUCIONES", href: "/#solutions" },
   { name: "BLOG", href: "/blog" },
-  { name: "CONTACTO", href: "/rfq" },
 ] as const;
 
 export const SOCIAL_LINKS = {
-  linkedin: "https://linkedin.com/company/garola-inoxidable",
-  instagram: "https://instagram.com/garolainox",
-  facebook: "https://facebook.com/garolainox",
-  whatsApp: "https://wa.me/5493533457796",
-  maps: "https://goo.gl/maps/your-location",
-  gmail: "mailto:info@garola-inox.com",
+  instagram: "https://www.instagram.com/garolainoxidablelv/?hl=es-la",
+  facebook: "https://www.facebook.com/Garolainoxidables/",
+  whatsApp: "https://wa.me/5493533683977",
+  maps: "https://maps.app.goo.gl/o6YurUGP8q3QVWad6",
+  gmail: "mailto:garolainoxidable@gmail.com",
 } as const;

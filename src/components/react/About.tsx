@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import { Target, Flag, CheckCircle } from "lucide-react";
-import aboutImage from "@assets/about-us.jpeg";
+import aboutImage from "@assets/about-us.webp";
 
 export default function About() {
   return (

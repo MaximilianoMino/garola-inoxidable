@@ -1,275 +1,248 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import * as Label from "@radix-ui/react-label";
 
 export default function RFQForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [phoneError, setPhoneError] = useState<string | null>(null);
+  const [toast, setToast] = useState<{
+    type: "success" | "error";
+    message: string;
+  } | null>(null);
+
+  function isValidPhone(value: string): boolean {
+    const normalized = value.replace(/[^\d+]/g, "");
+    if (normalized.length === 0) return true;
+    return /^\+?\d{8,15}$/.test(normalized);
+  }
+
+  // Auto-hide toast after 4 seconds
+  useEffect(() => {
+    if (toast) {
+      const timer = setTimeout(() => setToast(null), 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [toast]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsSubmitting(true);
 
     const form = e.currentTarget;
     const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
+    const phone = ((formData.get("phone") as string) ?? "").trim();
 
-    // TODO: Integrar con EmailJS o backend
-    console.log("Formulario enviado:", data);
+    if (!phone) {
+      setPhoneError("Este campo es obligatorio");
+      return;
+    }
 
-    // Simular delay
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    if (!isValidPhone(phone)) {
+      setPhoneError("Ingresá un número válido (ej: +54 9 3533 45-7796)");
+      return;
+    }
+    setPhoneError(null);
 
-    alert("¡Gracias por su consulta! Nos comunicaremos en menos de 24 horas.");
-    form.reset();
-    setIsSubmitting(false);
+    setIsSubmitting(true);
+    setToast(null);
+
+    const payload = {
+      name: formData.get("name"),
+      company: formData.get("company"),
+      email: formData.get("email"),
+      phone: phone,
+      message: formData.get("message"),
+      website: formData.get("website"),
+    };
+
+    try {
+      const response = await fetch("/api/send-email.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setToast({ type: "error", message: data.error || "Error al enviar." });
+      } else {
+        setToast({
+          type: "success",
+          message: "¡Consulta enviada! Nos comunicamos en menos de 24hs.",
+        });
+        form.reset();
+      }
+    } catch (err) {
+      setToast({ type: "error", message: "Error de conexión." });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <form
-      className="space-y-8"
-      id="rfq-form"
-      onSubmit={handleSubmit}
-      name="contacto-garola"
-    >
-      {/* Información Personal */}
-      <div>
-        <h2 className="text-xl font-bold text-white mb-6 uppercase tracking-tight border-b border-[#B9BAB6]/20 pb-3">
-          Información de Contacto
-        </h2>
+    <>
+      {/* Toast */}
+      {toast && (
+        <div
+          className={`fixed bottom-24 right-6 z-50 flex items-center gap-0 overflow-hidden backdrop-blur-md shadow-xl transition-all animate-slideIn ${
+            toast.type === "success"
+              ? "bg-[#1a1f24]/90 text-green-400"
+              : "bg-[#1a1f24]/90 text-red-400"
+          }`}
+        >
+          <div
+            className={`w-1 h-full min-h-[48px] ${toast.type === "success" ? "bg-green-500" : "bg-red-500"}`}
+          ></div>
+          <span className="text-sm font-medium px-4 py-3">{toast.message}</span>
+        </div>
+      )}
+
+      <form
+        className="space-y-8"
+        id="rfq-form"
+        onSubmit={handleSubmit}
+        name="consulta-garola"
+      >
+        {/* Honeypot */}
+        <div
+          className="absolute opacity-0 top-0 left-0 h-0 w-0 -z-10"
+          aria-hidden="true"
+        >
+          <label htmlFor="website">Website</label>
+          <input
+            type="text"
+            id="website"
+            name="website"
+            tabIndex={-1}
+            autoComplete="off"
+          />
+        </div>
+
+        {/* Header */}
+        <div>
+          <h2 className="text-xl font-bold text-white mb-2 uppercase tracking-tight">
+            Consulta comercial
+          </h2>
+          <p className="text-sm text-[#B9BAB6]">
+            Complete el formulario y nuestro equipo se pondrá en contacto.
+          </p>
+        </div>
+
+        {/* Nombre y Empresa */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <Label.Root
-              htmlFor="nombre"
-              className="block text-sm font-semibold text-[#F0ECEC] mb-2 uppercase tracking-wide"
+              htmlFor="name"
+              className="block text-sm font-semibold text-[#F0ECEC] mb-2 uppercase"
             >
               Nombre <span className="text-[#F80000]">*</span>
             </Label.Root>
             <input
               type="text"
-              id="nombre"
-              name="nombre"
+              id="name"
+              name="name"
               required
-              className="w-full px-4 py-3 bg-[#14171A] border border-[#B9BAB6]/30 rounded-lg text-white placeholder-[#B9BAB6] focus:outline-none focus:ring-2 focus:ring-[#F80000] focus:border-transparent transition-all"
               placeholder="Juan Pérez"
+              className="w-full px-4 py-3 bg-[#14171A] border border-[#B9BAB6]/30 rounded text-white placeholder-[#B9BAB6] focus:outline-none focus:ring-2 focus:ring-[#F80000]"
             />
           </div>
 
           <div>
             <Label.Root
-              htmlFor="empresa"
-              className="block text-sm font-semibold text-[#F0ECEC] mb-2 uppercase tracking-wide"
+              htmlFor="company"
+              className="block text-sm font-semibold text-[#F0ECEC] mb-2 uppercase"
             >
               Empresa <span className="text-[#F80000]">*</span>
             </Label.Root>
             <input
               type="text"
-              id="empresa"
-              name="empresa"
+              id="company"
+              name="company"
               required
-              className="w-full px-4 py-3 bg-[#14171A] border border-[#B9BAB6]/30 rounded-lg text-white placeholder-[#B9BAB6] focus:outline-none focus:ring-2 focus:ring-[#F80000] focus:border-transparent transition-all"
-              placeholder="Lácteos del Sur S.A."
-            />
-          </div>
-
-          <div>
-            <Label.Root
-              htmlFor="email"
-              className="block text-sm font-semibold text-[#F0ECEC] mb-2 uppercase tracking-wide"
-            >
-              Email <span className="text-[#F80000]">*</span>
-            </Label.Root>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              required
-              className="w-full px-4 py-3 bg-[#14171A] border border-[#B9BAB6]/30 rounded-lg text-white placeholder-[#B9BAB6] focus:outline-none focus:ring-2 focus:ring-[#F80000] focus:border-transparent transition-all"
-              placeholder="contacto@empresa.com"
-            />
-          </div>
-
-          <div>
-            <Label.Root
-              htmlFor="telefono"
-              className="block text-sm font-semibold text-[#F0ECEC] mb-2 uppercase tracking-wide"
-            >
-              Teléfono <span className="text-[#F80000]">*</span>
-            </Label.Root>
-            <input
-              type="tel"
-              id="telefono"
-              name="telefono"
-              required
-              className="w-full px-4 py-3 bg-[#14171A] border border-[#B9BAB6]/30 rounded-lg text-white placeholder-[#B9BAB6] focus:outline-none focus:ring-2 focus:ring-[#F80000] focus:border-transparent transition-all"
-              placeholder="+54 9 3533 XX-XXXX"
+              placeholder="Empresa S.A."
+              className="w-full px-4 py-3 bg-[#14171A] border border-[#B9BAB6]/30 rounded text-white placeholder-[#B9BAB6] focus:outline-none focus:ring-2 focus:ring-[#F80000]"
             />
           </div>
         </div>
-      </div>
 
-      {/* Información del Proyecto */}
-      <div className="pt-6 border-t border-[#B9BAB6]/20">
-        <h2 className="text-xl font-bold text-white mb-6 uppercase tracking-tight border-b border-[#B9BAB6]/20 pb-3">
-          Detalles del Proyecto
-        </h2>
-        <div className="space-y-6">
-          <div>
-            <Label.Root
-              htmlFor="sector"
-              className="block text-sm font-semibold text-[#F0ECEC] mb-2 uppercase tracking-wide"
-            >
-              Sector Industrial <span className="text-[#F80000]">*</span>
-            </Label.Root>
-            <select
-              id="sector"
-              name="sector"
-              required
-              className="w-full px-4 py-3 bg-[#14171A] border border-[#B9BAB6]/30 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#F80000] focus:border-transparent transition-all appearance-none cursor-pointer"
-              style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23B9BAB6'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
-                backgroundRepeat: "no-repeat",
-                backgroundPosition: "right 0.75rem center",
-                backgroundSize: "1.5em 1.5em",
-                paddingRight: "2.5rem",
-              }}
-            >
-              <option value="">Seleccione un sector</option>
-              <option value="lacteos">Industria Láctea</option>
-              <option value="tambo">Tambo</option>
-              <option value="alimenticia">Industria Alimenticia</option>
-              <option value="cervecera">Cervecería / Bebidas</option>
-              <option value="arquitectura">Arquitectura / Construcción</option>
-              <option value="otro">Otro</option>
-            </select>
-          </div>
-
-          <div>
-            <Label.Root
-              htmlFor="producto"
-              className="block text-sm font-semibold text-[#F0ECEC] mb-2 uppercase tracking-wide"
-            >
-              Producto de Interés
-            </Label.Root>
-            <select
-              id="producto"
-              name="producto"
-              className="w-full px-4 py-3 bg-[#14171A] border border-[#B9BAB6]/30 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#F80000] focus:border-transparent transition-all appearance-none cursor-pointer"
-              style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23B9BAB6'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
-                backgroundRepeat: "no-repeat",
-                backgroundPosition: "right 0.75rem center",
-                backgroundSize: "1.5em 1.5em",
-                paddingRight: "2.5rem",
-              }}
-            >
-              <option value="">Seleccione un producto (opcional)</option>
-              <option value="vitamilk">
-                Vita Milk (Pasteurizador Guachera)
-              </option>
-              <option value="dualtech">
-                Dualtech (Pasteurizador Calostro)
-              </option>
-              <option value="pasteurizador-htst">Pasteurizador HTST</option>
-              <option value="enfriador">Enfriador de Placas</option>
-              <option value="tanque">Tanque de Almacenamiento</option>
-              <option value="mezclador">Mezclador Industrial</option>
-              <option value="barandas">Barandas / Arquitectura</option>
-              <option value="personalizado">Proyecto Personalizado</option>
-            </select>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <Label.Root
-                htmlFor="capacidad"
-                className="block text-sm font-semibold text-[#F0ECEC] mb-2 uppercase tracking-wide"
-              >
-                Capacidad Estimada
-              </Label.Root>
-              <input
-                type="text"
-                id="capacidad"
-                name="capacidad"
-                className="w-full px-4 py-3 bg-[#14171A] border border-[#B9BAB6]/30 rounded-lg text-white placeholder-[#B9BAB6] focus:outline-none focus:ring-2 focus:ring-[#F80000] focus:border-transparent transition-all"
-                placeholder="ej: 500 litros"
-              />
-            </div>
-
-            <div>
-              <Label.Root
-                htmlFor="plazo"
-                className="block text-sm font-semibold text-[#F0ECEC] mb-2 uppercase tracking-wide"
-              >
-                Plazo de Implementación
-              </Label.Root>
-              <select
-                id="plazo"
-                name="plazo"
-                className="w-full px-4 py-3 bg-[#14171A] border border-[#B9BAB6]/30 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#F80000] focus:border-transparent transition-all appearance-none cursor-pointer"
-                style={{
-                  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23B9BAB6'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
-                  backgroundRepeat: "no-repeat",
-                  backgroundPosition: "right 0.75rem center",
-                  backgroundSize: "1.5em 1.5em",
-                  paddingRight: "2.5rem",
-                }}
-              >
-                <option value="">Seleccione plazo</option>
-                <option value="urgente">Urgente (menos de 1 mes)</option>
-                <option value="1-3-meses">1-3 meses</option>
-                <option value="3-6-meses">3-6 meses</option>
-                <option value="flexible">Flexible</option>
-              </select>
-            </div>
-          </div>
-
-          <div>
-            <Label.Root
-              htmlFor="mensaje"
-              className="block text-sm font-semibold text-[#F0ECEC] mb-2 uppercase tracking-wide"
-            >
-              Consulta / Requerimientos Específicos{" "}
-              <span className="text-[#F80000]">*</span>
-            </Label.Root>
-            <textarea
-              id="mensaje"
-              name="mensaje"
-              rows={6}
-              required
-              placeholder="Describa sus necesidades específicas, requisitos técnicos, condiciones del proyecto o cualquier información relevante para su cotización..."
-              className="w-full px-4 py-3 bg-[#14171A] border border-[#B9BAB6]/30 rounded-lg text-white placeholder-[#B9BAB6] focus:outline-none focus:ring-2 focus:ring-[#F80000] focus:border-transparent transition-all resize-none"
-            />
-          </div>
+        {/* Email */}
+        <div>
+          <Label.Root
+            htmlFor="email"
+            className="block text-sm font-semibold text-[#F0ECEC] mb-2 uppercase"
+          >
+            Email <span className="text-[#F80000]">*</span>
+          </Label.Root>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            placeholder="contacto@empresa.com"
+            className="w-full px-4 py-3 bg-[#14171A] border border-[#B9BAB6]/30 rounded text-white placeholder-[#B9BAB6] focus:outline-none focus:ring-2 focus:ring-[#F80000]"
+          />
         </div>
-      </div>
 
-      {/* Botón de Envío */}
-      <div className="pt-6">
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="w-full bg-[#F80000] hover:bg-[#dc2626] disabled:bg-[#B9BAB6] text-white px-8 py-4 rounded-lg font-bold uppercase tracking-widest text-sm shadow-lg hover:shadow-[#F80000]/30 transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-50 flex items-center justify-center space-x-3"
-        >
-          <span>{isSubmitting ? "Enviando..." : "Solicitar Cotización"}</span>
-          {!isSubmitting && (
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M13 7l5 5m0 0l-5 5m5-5H6"
-              />
-            </svg>
+        {/* WhatsApp */}
+        <div>
+          <Label.Root
+            htmlFor="phone"
+            className="block text-sm font-semibold text-[#F0ECEC] mb-2 uppercase"
+          >
+            WhatsApp <span className="text-[#F80000]">*</span>
+          </Label.Root>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            required
+            inputMode="tel"
+            autoComplete="tel"
+            placeholder="+54 9 3533 45-7796"
+            className={`w-full px-4 py-3 bg-[#14171A] border rounded text-white placeholder-[#B9BAB6] focus:outline-none focus:ring-2 focus:ring-[#F80000] ${
+              phoneError ? "border-red-500" : "border-[#B9BAB6]/30"
+            }`}
+            onChange={() => phoneError && setPhoneError(null)}
+          />
+          {phoneError && (
+            <p className="text-red-500 text-xs mt-2">{phoneError}</p>
           )}
-        </button>
-        <p className="text-xs text-[#B9BAB6] text-center mt-4">
-          Nos comprometemos a responder en menos de 24 horas hábiles.
-        </p>
-      </div>
-    </form>
+        </div>
+
+        {/* Mensaje */}
+        <div>
+          <Label.Root
+            htmlFor="message"
+            className="block text-sm font-semibold text-[#F0ECEC] mb-2 uppercase"
+          >
+            Mensaje <span className="text-[#F80000]">*</span>
+          </Label.Root>
+          <textarea
+            id="message"
+            name="message"
+            rows={5}
+            required
+            placeholder="Describa brevemente su consulta o necesidad."
+            className="w-full px-4 py-3 bg-[#14171A] border border-[#B9BAB6]/30 rounded text-white placeholder-[#B9BAB6] focus:outline-none focus:ring-2 focus:ring-[#F80000] resize-none"
+          />
+        </div>
+
+        {/* Submit */}
+        <div className="flex flex-col items-center">
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full lg:w-1/2 bg-[#F80000] hover:bg-[#dc2626] disabled:bg-[#B9BAB6]
+                       text-white px-8 py-4 font-bold uppercase tracking-widest
+                       shadow-lg transition-all disabled:opacity-50"
+          >
+            {isSubmitting ? "Enviando..." : "Enviar consulta"}
+          </button>
+
+          <p className="text-xs text-[#B9BAB6] text-center mt-4">
+            Respondemos en menos de 24 horas hábiles.
+          </p>
+        </div>
+      </form>
+    </>
   );
 }
