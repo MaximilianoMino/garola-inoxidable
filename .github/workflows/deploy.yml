@@ -25,11 +25,19 @@ jobs:
 
       - name: Preparar .env desde secrets
         env:
-          SPACE_ID: ${{ secrets.CONTENTFUL_SPACE_ID }}
-          ACCESS_TOKEN: ${{ secrets.CONTENTFUL_ACCESS_TOKEN }}
+          S1: ${{ secrets.CONTENTFUL_SPACE_ID }}
+          S2: ${{ secrets.CONTENTFUL_ACCESS_TOKEN }}
+          V1: ${{ vars.CONTENTFUL_SPACE_ID }}
+          V2: ${{ vars.CONTENTFUL_ACCESS_TOKEN }}
         run: |
+          SPACE_ID="${S1:-$V1}"
+          ACCESS_TOKEN="${S2:-$V2}"
+          echo "secret space_id: $([ -n "$S1" ] && echo PRESENT || echo EMPTY)"
+          echo "secret access_token: $([ -n "$S2" ] && echo PRESENT || echo EMPTY)"
+          echo "variable space_id: $([ -n "$V1" ] && echo PRESENT || echo EMPTY)"
+          echo "variable access_token: $([ -n "$V2" ] && echo PRESENT || echo EMPTY)"
           if [ -z "$SPACE_ID" ] || [ -z "$ACCESS_TOKEN" ]; then
-            echo "::error::Falta cargar CONTENTFUL_SPACE_ID/CONTENTFUL_ACCESS_TOKEN en repo secrets"; exit 1
+            echo "::error::Secret/var no encontrado. Ver: repo settings → Secrets and variables → Actions (tab Secrets)"; exit 1
           fi
           printf "CONTENTFUL_SPACE_ID=%s\nCONTENTFUL_ACCESS_TOKEN=%s\n" "$SPACE_ID" "$ACCESS_TOKEN" > .env
 
