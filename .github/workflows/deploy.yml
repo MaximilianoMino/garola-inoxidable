@@ -44,13 +44,43 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Verificar secrets FTP y exportar a env
+        env:
+          S1: ${{ secrets.FTP_HOST }}
+          S2: ${{ secrets.FTP_USERNAME }}
+          S3: ${{ secrets.FTP_PASSWORD }}
+          S4: ${{ secrets.FTP_SERVER_DIR }}
+          V1: ${{ vars.FTP_HOST }}
+          V2: ${{ vars.FTP_USERNAME }}
+          V3: ${{ vars.FTP_PASSWORD }}
+          V4: ${{ vars.FTP_SERVER_DIR }}
+        run: |
+          for i in 1 2 3 4; do
+            eval "name=\$S$i"; eval "val=\$V$i"
+            echo "FTP[$i] secret: $([ -n "$name" ] && echo PRESENT || echo EMPTY) | variable: $([ -n "$val" ] && echo PRESENT || echo EMPTY)"
+          done
+          FTP_HOST="${S1:-$V1}"
+          FTP_USERNAME="${S2:-$V2}"
+          FTP_PASSWORD="${S3:-$V3}"
+          FTP_SERVER_DIR="${S4:-$V4}"
+          if [ -z "$FTP_HOST" ] || [ -z "$FTP_USERNAME" ] || [ -z "$FTP_PASSWORD" ] || [ -z "$FTP_SERVER_DIR" ]; then
+            echo "::error::Faltan secrets/vars FTP (FTP_HOST, FTP_USERNAME, FTP_PASSWORD, FTP_SERVER_DIR). Ver: repo settings → Secrets and variables → Actions (tab Secrets)"; exit 1
+          fi
+          {
+            echo "FTP_HOST=$FTP_HOST"
+            echo "FTP_USERNAME=$FTP_USERNAME"
+            echo "FTP_PASSWORD=$FTP_PASSWORD"
+            echo "FTP_SERVER_DIR=$FTP_SERVER_DIR"
+          } >> "$GITHUB_ENV"
+
       - name: Deploy to Hostinger (FTP)
         uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: ${{ secrets.FTP_SERVER_DIR }}
+          server: ${{ env.FTP_HOST }}
+          username: ${{ env.FTP_USERNAME }}
+          password: ${{ env.FTP_PASSWORD }}
+          server-dir: ${{ env.FTP_SERVER_DIR }}
           local-dir: ./dist/
           protocol: ftp
-          dangerous--clean-dest: true
+          port: 21
+          dangerous-clean-slate: true
