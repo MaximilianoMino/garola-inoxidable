@@ -63,6 +63,7 @@ jobs:
           FTP_USERNAME="${S2:-$V2}"
           FTP_PASSWORD="${S3:-$V3}"
           FTP_SERVER_DIR="${S4:-$V4}"
+          FTP_SERVER_DIR="${FTP_SERVER_DIR%/}/"
           if [ -z "$FTP_HOST" ] || [ -z "$FTP_USERNAME" ] || [ -z "$FTP_PASSWORD" ] || [ -z "$FTP_SERVER_DIR" ]; then
             echo "::error::Faltan secrets/vars FTP (FTP_HOST, FTP_USERNAME, FTP_PASSWORD, FTP_SERVER_DIR). Ver: repo settings → Secrets and variables → Actions (tab Secrets)"; exit 1
           fi
