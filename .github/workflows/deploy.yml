@@ -1,6 +1,7 @@
 name: Build & Deploy
 
 on:
+  workflow_dispatch:
   repository_dispatch:
     types: [contentful-update]
   push:
