@@ -8,5 +8,5 @@ export async function getSortedPosts(): Promise<BlogPost[]> {
     order: ["sys.createdAt"],
   });
 
-  return res.items.map(mapBlogPost);
+  return res.items.map(mapBlogPost).filter(Boolean) as BlogPost[];
 }

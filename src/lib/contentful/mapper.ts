@@ -2,11 +2,12 @@ import type { Entry } from "contentful";
 import type { Document } from "@contentful/rich-text-types";
 import type { BlogPost } from "@/types";
 
-export function mapBlogPost(entry: Entry<any>): BlogPost {
+export function mapBlogPost(entry: Entry<any>): BlogPost | null {
   const fields = entry.fields;
 
   if (!fields.slug || !fields.title || !fields.content) {
-    throw new Error(`Post inválido en Contentful: ${entry.sys.id}`);
+    console.warn(`Post inválido en Contentful, skippeado: ${entry.sys.id}`);
+    return null;
   }
 
   return {
