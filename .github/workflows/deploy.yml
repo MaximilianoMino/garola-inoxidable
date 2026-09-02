@@ -85,5 +85,7 @@ jobs:
           local-dir: ./dist/
           protocol: ftp
           port: 21
-          dangerous-clean-slate: true
+          # Importante: NO usar dangerous-clean-slate (borra todo el server-dir).
+          # Con server-dir=/ y clean-slate activo se borró la web entera.
+          dangerous-clean-slate: false
           timeout: 180000
