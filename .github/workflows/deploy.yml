@@ -78,6 +78,26 @@ jobs:
             echo "FTP_SERVER_DIR=$FTP_SERVER_DIR"
           } >> "$GITHUB_ENV"
 
+      - name: DIAG - Subir marcador y verificar donde escribe GitHub
+        env:
+          FTP_HOST: ${{ env.FTP_HOST }}
+          FTP_USERNAME: ${{ env.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ env.FTP_PASSWORD }}
+          FTP_SERVER_DIR: ${{ env.FTP_SERVER_DIR }}
+        run: |
+          if ! command -v lftp >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq lftp
+          fi
+          echo "GH-MARKER-$(date +%s)" > /tmp/gh-marker.txt
+          echo "server-dir = [$FTP_SERVER_DIR]"
+          lftp -u "$FTP_USERNAME,$FTP_PASSWORD" -p 21 "$FTP_HOST" \
+            -e "set net:connect-timeout 30; set passive on; set ftp:ssl-allow no; put -O $FTP_SERVER_DIR /tmp/gh-marker.txt; quit"
+          echo "subido. Verificando por HTTP..."
+          for url in "https://www.garolainoxidable.com.ar/gh-marker.txt" "https://garolainoxidable.com.ar/gh-marker.txt"; do
+            echo "HTTP $url => $(curl -s -o /dev/null -w '%{http_code}' $url)"
+          done
+
       - name: Deploy to Hostinger (FTP con reintentos)
         env:
           FTP_HOST: ${{ env.FTP_HOST }}
@@ -93,10 +113,8 @@ jobs:
           for attempt in 1 2 3 4 5; do
             echo "::group::Intento FTP $attempt/5"
             set +e
-            echo "--- resolving FTP_HOST=$FTP_HOST ---"
-            (getent hosts "$FTP_HOST" || nslookup "$FTP_HOST" 2>/dev/null || echo "no dns info") 
             lftp -u "$FTP_USERNAME,$FTP_PASSWORD" -p 21 "$FTP_HOST" \
-              -e "set net:connect-timeout 60; set net:timeout 60; set net:max-retries 3; set net:reconnect-interval-base 5; set passive on; set ftp:ssl-allow no; pwd; mirror -R --no-perms --no-umask --verbose ./dist/ $FTP_SERVER_DIR; quit"
+              -e "set net:connect-timeout 60; set net:timeout 60; set net:max-retries 3; set net:reconnect-interval-base 5; set passive on; set ftp:ssl-allow no; mirror -R --no-perms --no-umask --verbose ./dist/ $FTP_SERVER_DIR; quit"
             rc=$?
             set -e
             echo "::endgroup::"
