@@ -51,12 +51,18 @@ const hasPosts = posts.length > 0;
               <article class="group bg-[#1a1f24] border border-slate-800 rounded overflow-hidden hover:border-red-600/50 transition-all duration-300 flex flex-col">
                 
                 <!-- Imagen -->
-                <div class="relative h-56 overflow-hidden" style="aspect-ratio: 16/9;">
-                  <img
-                    src={post.image ?? ""}
-                    alt={post.title}
-                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
+                <div class="relative h-56 overflow-hidden bg-[#0b1220]" style="aspect-ratio: 16/9;">
+                  {post.image ? (
+                    <img
+                      src={post.image}
+                      alt={post.title}
+                      class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                  ) : (
+                    <div class="w-full h-full bg-linear-to-br from-[#14171A] via-[#1a1f24] to-[#0b1220] flex items-center justify-center">
+                      <span class="text-4xl font-extrabold text-white/90 tracking-widest uppercase">GAROLA</span>
+                    </div>
+                  )}
 
                   <span class="absolute top-4 left-4 text-xs font-semibold text-white px-3 py-1 rounded-none bg-red-600 uppercase">
                     {post.category}

@@ -42,14 +42,21 @@ const featuredPosts = posts.slice(0, 3);
       {
         featuredPosts.map((post) => (
           <article class="group bg-[#1a1f24] border font-roboto border-slate-800 rounded overflow-hidden  transition-all duration-300 flex flex-col h-full">
-            <div class="relative h-48 overflow-hidden">
-              <Image
-                src={post.image ?? ""}
-                alt={post.title}
-                width={1000}
-                height={2000}
-                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-              />
+            <div class="relative h-48 overflow-hidden bg-[#0b1220]">
+              {post.image ? (
+                <Image
+                  src={post.image}
+                  alt={post.title}
+                  width={1000}
+                  height={2000}
+                  class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+              ) : (
+                <div class="w-full h-full bg-linear-to-br from-[#14171A] via-[#1a1f24] to-[#0b1220] flex items-center justify-center">
+                  <span class="text-4xl font-extrabold text-white/90 tracking-widest uppercase">GAROLA</span>
+                  <span class="absolute bottom-3 right-4 text-red-500 text-xs font-semibold uppercase tracking-widest">Inoxidable</span>
+                </div>
+              )}
             </div>
 
             <div class="p-6 flex flex-col flex-1">

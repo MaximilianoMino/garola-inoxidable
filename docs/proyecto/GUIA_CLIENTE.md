@@ -135,9 +135,11 @@ La prioridad determina el orden en que aparecen los productos:
 | **Slug** | ✅ Sí | URL del post, sin espacios, con guiones | "beneficios-acero-inoxidable-lactea" |
 | **Description** (Descripción) | ✅ Sí | Resumen breve del artículo (1-2 líneas) | "Descubrí por qué el acero inoxidable es el material ideal..." |
 | **Category** (Categoría) | ✅ Sí | Categoría del post | "Industria" |
-| **Image** (Imagen) | ✅ Sí | Imagen principal del artículo | — |
+| **Image** (Imagen) | No* | Imagen principal del artículo | — |
 | **Content** (Contenido) | ✅ Sí | Texto completo del artículo | — |
 | **Draft** (Borrador) | No | Si está activado, el post NO se muestra en la web | — |
+
+> *La imagen es opcional. Si no se carga imagen, el sitio muestra un cartel "GAROLA" como portada, así que el post se ve bien igual.
 
 ### 4.3 Usar el editor de contenido
 
@@ -151,12 +153,65 @@ El campo **Content** es un editor de texto enriquecido. Podés:
 - **Listas:** Hacé click en el ícono de lista (con o sin números)
 - **Imágenes:** Hacé click en el ícono de imagen y subí el archivo
 
-### 4.4 Publicar un post
+### 4.4 Ejemplo completo: entrada "TodoLáctea 2026" (con el contenido listo para copiar)
+
+Podés copiar los valores de abajo y pegarlos directamente en Contentful.
+
+**1.** Content → **Add entry** → **"Garola Inoxidable"**
+
+| Campo | Valor a pegar |
+|---|---|
+| **Title** | `Garola fue parte de una edición récord de TodoLáctea` |
+| **Slug** | `garola-en-todolactea-2026` |
+| **Description** | `Más de 23.000 personas participaron de TodoLáctea 2026. Garola estuvo presente durante las tres jornadas compartiendo sus soluciones en acero inoxidable para la industria láctea.` |
+| **Category** | `Eventos` |
+| **Image** | Dejalo vacío (el sitio muestra una portada automática) |
+| **Draft** | Sin activar |
+
+**2.** En el campo **Content**, pegá el texto y después aplicá los títulos. Copiá esto:
+
+```
+Más de 23.000 personas participaron de TodoLáctea 2026, uno de los encuentros más importantes de la cadena láctea argentina.
+
+Del 12 al 14 de mayo, la Sociedad Rural de San Francisco, Córdoba, recibió a productores, técnicos, empresarios, estudiantes y profesionales vinculados con la producción y la industria láctea.
+
+Garola estuvo presente durante las tres jornadas, compartiendo sus soluciones en acero inoxidable y acompañando a quienes trabajan diariamente para mejorar sus procesos productivos.
+
+La exposición se convirtió nuevamente en un espacio estratégico para conocer nuevas tecnologías, intercambiar experiencias y generar vínculos entre los diferentes actores de la cadena. Auditorios, capacitaciones, actividades técnicas y espacios comerciales mantuvieron un movimiento permanente durante todo el evento.
+
+Tecnología aplicada a cada proceso
+
+En nuestro espacio recibimos a productores, representantes de industrias lácteas y profesionales interesados en incorporar equipamiento confiable, eficiente y adaptado a las necesidades de cada establecimiento.
+
+Durante la muestra presentamos las distintas soluciones que desarrollamos para tambos, guacheras, queserías e industrias, entre ellas pasteurizadores, tanques y equipos fabricados íntegramente en acero inoxidable.
+
+Cada conversación nos permitió conocer nuevos proyectos, analizar necesidades específicas y continuar fortaleciendo nuestro compromiso con el desarrollo de equipos a medida.
+
+Tres jornadas de intercambio y crecimiento
+
+La edición 2026 reunió a más de 23.000 visitantes y registró una importante participación de asistentes de diferentes puntos del país y del exterior.
+
+Para Garola, formar parte de TodoLáctea representa mucho más que exhibir nuestros productos. Es una oportunidad para encontrarnos con clientes, escuchar a quienes utilizan nuestros equipos y seguir trabajando sobre los desafíos reales de la producción.
+
+Agradecemos a todas las personas que se acercaron a conversar con nuestro equipo, conocer nuestras soluciones y compartir sus proyectos.
+
+Nos llevamos nuevas ideas, contactos y desafíos para continuar haciendo lo que sabemos: fabricar equipamiento de acero inoxidable pensado para mejorar cada etapa del proceso productivo.
+
+Seguimos acompañando el crecimiento de la cadena láctea con experiencia, tecnología y soluciones desarrolladas a medida.
+```
+
+**3.** Ahora aplicá los títulos en el editor: seleccioná la línea **"Tecnología aplicada a cada proceso"** y elegí **Heading 2** en el menú de títulos; hacé lo mismo con la línea **"Tres jornadas de intercambio y crecimiento"**.
+
+**4.** La última línea ("Seguimos acompañando el crecimiento...") marcala toda en **negrita** (B) y **cursiva** (I).
+
+**5.** Hacé click en **Publish**. El post aparece en la web en pocos minutos en **/blog** y en la página de inicio.
+
+### 4.5 Publicar un post
 
 1. Cuando termines de escribir, hacé click en **"Publish"** (arriba a la derecha)
 2. El post aparecerá en la web en pocos minutos
 
-### 4.5 Despublicar un post (ocultar sin eliminar)
+### 4.6 Despublicar un post (ocultar sin eliminar)
 
 1. Abrí el post en Contentful
 2. Hacé click en **"Unpublish"** (arriba a la derecha)
@@ -200,7 +255,7 @@ Los slugs son las URLs que aparecen en el navegador. Reglas:
 
 - **Frecuencia recomendada:** 1-2 posts por mes
 - **Extensión:** 300-800 palabras por post
-- **Imagen:** Siempre incluir una imagen principal
+- **Imagen:** Opcional. Si no hay imagen, el sitio muestra una portada automática
 - **Descripción:** 1-2 líneas que resuman el artículo
 
 ---
