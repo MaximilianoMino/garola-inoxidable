@@ -60,12 +60,12 @@ jobs:
             eval "name=\$S$i"; eval "val=\$V$i"
             echo "FTP[$i] secret: $([ -n "$name" ] && echo PRESENT || echo EMPTY) | variable: $([ -n "$val" ] && echo PRESENT || echo EMPTY)"
           done
-          FTP_HOST="${S1:-$V1}"
-          FTP_USERNAME="${S2:-$V2}"
+          # Prioridad: VARIABLE primero (valores controlables y verificables), luego secret.
+          # FTP_PASSWORD siempres viene del secret (sensible).
+          FTP_HOST="${V1:-$S1}"
+          FTP_USERNAME="${V2:-$S2}"
           FTP_PASSWORD="${S3:-$V3}"
-          # FTP_SERVER_DIR se controla via VARIABLE (no secret) para verificar el valor real.
-          # El usuario FTP ya entra a la web root, por lo que el server-dir correcto es "/".
-          FTP_SERVER_DIR="${V4:-${S4:-\"/\"}}"
+          FTP_SERVER_DIR="${V4:-$S4}"
           FTP_SERVER_DIR="${FTP_SERVER_DIR%/}/"
           echo "FTP_SERVER_DIR_RESOLVED=[${FTP_SERVER_DIR}]"
           if [ -z "$FTP_HOST" ] || [ -z "$FTP_USERNAME" ] || [ -z "$FTP_PASSWORD" ] || [ -z "$FTP_SERVER_DIR" ]; then
@@ -77,26 +77,6 @@ jobs:
             echo "FTP_PASSWORD=$FTP_PASSWORD"
             echo "FTP_SERVER_DIR=$FTP_SERVER_DIR"
           } >> "$GITHUB_ENV"
-
-      - name: DIAG - Subir marcador y verificar donde escribe GitHub
-        env:
-          FTP_HOST: ${{ env.FTP_HOST }}
-          FTP_USERNAME: ${{ env.FTP_USERNAME }}
-          FTP_PASSWORD: ${{ env.FTP_PASSWORD }}
-          FTP_SERVER_DIR: ${{ env.FTP_SERVER_DIR }}
-        run: |
-          if ! command -v lftp >/dev/null 2>&1; then
-            sudo apt-get update -qq
-            sudo apt-get install -y -qq lftp
-          fi
-          echo "GH-MARKER-$(date +%s)" > /tmp/gh-marker.txt
-          echo "server-dir = [$FTP_SERVER_DIR]"
-          lftp -u "$FTP_USERNAME,$FTP_PASSWORD" -p 21 "$FTP_HOST" \
-            -e "set net:connect-timeout 30; set passive on; set ftp:ssl-allow no; put -O $FTP_SERVER_DIR /tmp/gh-marker.txt; quit"
-          echo "subido. Verificando por HTTP..."
-          for url in "https://www.garolainoxidable.com.ar/gh-marker.txt" "https://garolainoxidable.com.ar/gh-marker.txt"; do
-            echo "HTTP $url => $(curl -s -o /dev/null -w '%{http_code}' $url)"
-          done
 
       - name: Deploy to Hostinger (FTP con reintentos)
         env:
