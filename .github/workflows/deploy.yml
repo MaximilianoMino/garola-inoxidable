@@ -93,8 +93,10 @@ jobs:
           for attempt in 1 2 3 4 5; do
             echo "::group::Intento FTP $attempt/5"
             set +e
+            echo "--- resolving FTP_HOST=$FTP_HOST ---"
+            (getent hosts "$FTP_HOST" || nslookup "$FTP_HOST" 2>/dev/null || echo "no dns info") 
             lftp -u "$FTP_USERNAME,$FTP_PASSWORD" -p 21 "$FTP_HOST" \
-              -e "set net:connect-timeout 60; set net:timeout 60; set net:max-retries 3; set net:reconnect-interval-base 5; set passive on; set ftp:ssl-allow no; echo REMOTE_PWD=\$(pwd); mirror -R --no-perms --no-umask --verbose ./dist/ $FTP_SERVER_DIR; quit"
+              -e "set net:connect-timeout 60; set net:timeout 60; set net:max-retries 3; set net:reconnect-interval-base 5; set passive on; set ftp:ssl-allow no; pwd; mirror -R --no-perms --no-umask --verbose ./dist/ $FTP_SERVER_DIR; quit"
             rc=$?
             set -e
             echo "::endgroup::"
