@@ -63,8 +63,11 @@ jobs:
           FTP_HOST="${S1:-$V1}"
           FTP_USERNAME="${S2:-$V2}"
           FTP_PASSWORD="${S3:-$V3}"
-          FTP_SERVER_DIR="${S4:-$V4}"
+          # FTP_SERVER_DIR se controla via VARIABLE (no secret) para verificar el valor real.
+          # El usuario FTP ya entra a la web root, por lo que el server-dir correcto es "/".
+          FTP_SERVER_DIR="${V4:-${S4:-\"/\"}}"
           FTP_SERVER_DIR="${FTP_SERVER_DIR%/}/"
+          echo "FTP_SERVER_DIR_RESOLVED=[${FTP_SERVER_DIR}]"
           if [ -z "$FTP_HOST" ] || [ -z "$FTP_USERNAME" ] || [ -z "$FTP_PASSWORD" ] || [ -z "$FTP_SERVER_DIR" ]; then
             echo "::error::Faltan secrets/vars FTP (FTP_HOST, FTP_USERNAME, FTP_PASSWORD, FTP_SERVER_DIR). Ver: repo settings → Secrets and variables → Actions (tab Secrets)"; exit 1
           fi
@@ -91,7 +94,7 @@ jobs:
             echo "::group::Intento FTP $attempt/5"
             set +e
             lftp -u "$FTP_USERNAME,$FTP_PASSWORD" -p 21 "$FTP_HOST" \
-              -e "set net:connect-timeout 60; set net:timeout 60; set net:max-retries 3; set net:reconnect-interval-base 5; set passive on; set ftp:ssl-allow no; mirror -R --no-perms --no-umask --verbose ./dist/ $FTP_SERVER_DIR; quit"
+              -e "set net:connect-timeout 60; set net:timeout 60; set net:max-retries 3; set net:reconnect-interval-base 5; set passive on; set ftp:ssl-allow no; echo REMOTE_PWD=\$(pwd); mirror -R --no-perms --no-umask --verbose ./dist/ $FTP_SERVER_DIR; quit"
             rc=$?
             set -e
             echo "::endgroup::"
